@@ -1,0 +1,11 @@
+FILE_TYPE = MULTI_PHYS_TABLE;
+
+PART 'LM358FV_GE2'
+CLASS = IC
+{========================================================================================}
+:"MANUFACTURER_NAME", "MANUFACTURER_PART_NUMBER"= "PART_NUMBER", "JEDEC_TYPE", "PACK_TYPE", "MOUSER_PART_NUMBER", "MOUSER_PRICE/STOCK", "DESCRIPTION", "DATASHEET", "HEIGHT";
+{========================================================================================}
+ "ROHM Semiconductor", "LM358FV-GE2" (!) = "", "SOP65P640X135-8N", "Small Outline Packages", "755-LM358FV-GE2", "https://www.mouser.co.uk/ProductDetail/ROHM-Semiconductor/LM358FV-GE2?qs=HXFqYaX1Q2xR2xgE3bpCFQ%3D%3D", "Operational Amplifiers - Op Amps LM358FV is a dual ground sense operational amplifier. These have features of low current consumption and wide operating voltage range from 3V to 32V (single power supply).", "https://fscdn.rohm.com/en/products/databook/datasheet/ic/amp_linear/opamp/lm358f-e.pdf", "1.35 mm"
+END_PART
+
+END.

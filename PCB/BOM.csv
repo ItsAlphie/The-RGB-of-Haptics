@@ -1,0 +1,22 @@
+Reference,Value,Datasheet,Footprint,Qty,DNP
+"C1,C2,C3,C4,C6,C7",1µF,~,Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,6,lab
+C5,0.01µF,~,Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,1,lab
+C8,10µF,~,Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,1,lab
+"C9,C10",10nF,~,Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,2,lab
+Flex1,20k - 50k,~,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,1,
+IC1,MAX1968EUI+T,https://datasheets.maximintegrated.com/en/ds/MAX1968-MAX1969.pdf,SOP65P640X110-28N,1,v
+J1,Power,~,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,1,v
+J2,VIBR1,~,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,1,v
+J3,VIBR2,~,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,1,v
+J4,Temperature Control & Flex Sensor,~,Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical,1,v
+J6,Haptic Motors,~,Connector_PinHeader_2.54mm:PinHeader_2x03_P2.54mm_Vertical,1,v
+"L1,L2",3.3µH,~,Coil_VLS6045:VLS6045,2,v
+PE1,PeltierElement,~,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,1,v
+"R1,R4",50k,~,Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,2,lab
+R2,100k,~,Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,1,lab
+R3,50m,~,Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder,1,lab
+R5,32.5k,~,Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,1,lab
+"R6,R7",100,~,Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,2,lab
+TH1,Thermistor_NTC,~,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,1,v
+U1,LM358,http://www.ti.com/lit/ds/symlink/lm2904-n.pdf,LM358:SOP65P640X135-8N,1,v
+"U2,U3",~,,HapticDriver:DRV2605l,2,v

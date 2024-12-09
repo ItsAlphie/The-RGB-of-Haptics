@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP LM358FV-GE2
+D Operational Amplifiers - Op Amps LM358FV is a dual ground sense operational amplifier. These have features of low current consumption and wide operating voltage range from 3V to 32V (single power supply).
+K
+F https://fscdn.rohm.com/en/products/databook/datasheet/ic/amp_linear/opamp/lm358f-e.pdf
+$ENDCMP
+#
+#End Doc Library

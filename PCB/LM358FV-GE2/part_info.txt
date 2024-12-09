@@ -1,0 +1,9 @@
+Manufacturer=ROHM Semiconductor
+PartNumber=LM358FV-GE2
+PartCategory=Integrated Circuit
+PackageCategory=Small Outline Packages
+PinCount=8
+Version=1.1
+Released=2024-01-06 03:27:51
+Downloaded=2024-11-25 16:11:07
+3D=Y

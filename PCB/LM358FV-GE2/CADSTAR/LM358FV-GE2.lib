@@ -1,0 +1,16 @@
+.LM358FV-GE2 :1 ;Operational Amplifiers - Op Amps LM358FV is a dual ground sense operational amplifier. These have features of low current consumption and wide operating voltage range from 3V to 32V (single power supply).
+SOP65P640X135-8N
+*STM IC
+*NGS
+*PLB 1="OUT1" 2="-IN1" 3="+IN1" 4="VEE" 5="+IN2" 6="-IN2" 7="OUT2" 8="VCC"
+*MXP 8
+*DFN LM358FV-GE2
+~!Mouser Part Number (755-LM358FV-GE2)
+~!Link Mouser Price/Stock (https://www.mouser.co.uk/ProductDetail/ROHM-Semiconductor/LM358FV-GE2?qs=HXFqYaX1Q2xR2xgE3bpCFQ%3D%3D)
+~!Manufacturer_Name (ROHM Semiconductor)
+~!Manufacturer_Part_Number (LM358FV-GE2)
+~!Link Datasheet (https://fscdn.rohm.com/en/products/databook/datasheet/ic/amp_linear/opamp/lm358f-e.pdf)
+~!Height (1.35mm)
+~!3D_Model (LM358FV-GE2)
+LM358FV-GE2
+1.1!U 2.1!U 3.1!U 4.1!U 8.1!U 7.1!U 6.1!U 5.1!U 

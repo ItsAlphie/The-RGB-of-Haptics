@@ -1,0 +1,13 @@
+(unit MM)
+
+(package "MAX1968EUI+T"
+    (type UNDEF)
+    (uver 2)
+    (cuser "SamacSys")
+    (uuser "SamacSys")
+    (utime 2020-10-06-12:18:25)
+    (mountForm default
+        (footprintRef "SOP65P640X110-28N")
+        (spec "System")
+    )
+)

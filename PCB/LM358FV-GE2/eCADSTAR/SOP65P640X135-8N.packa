@@ -1,0 +1,13 @@
+(unit MM)
+
+(package "LM358FV-GE2"
+    (type UNDEF)
+    (uver 2)
+    (cuser "SamacSys")
+    (uuser "SamacSys")
+    (utime 2019-02-01-22:08:32)
+    (mountForm default
+        (footprintRef "SOP65P640X135-8N")
+        (spec "System")
+    )
+)

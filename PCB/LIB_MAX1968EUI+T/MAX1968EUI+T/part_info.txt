@@ -1,0 +1,9 @@
+Manufacturer=Analog Devices
+PartNumber=MAX1968EUI+T
+PartCategory=Integrated Circuit
+PackageCategory=Small Outline Packages
+PinCount=28
+Version=2.1
+Released=2021-05-01 03:12:58
+Downloaded=2024-11-04 10:52:44
+3D=Y

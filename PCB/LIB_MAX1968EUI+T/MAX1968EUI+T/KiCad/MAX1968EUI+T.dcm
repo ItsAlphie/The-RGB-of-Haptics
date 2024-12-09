@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP MAX1968EUI+T
+D Power Management Specialized - PMIC Power Drivers for Peltier TEC Modules
+K
+F https://datasheets.maximintegrated.com/en/ds/MAX1968-MAX1969.pdf
+$ENDCMP
+#
+#End Doc Library
