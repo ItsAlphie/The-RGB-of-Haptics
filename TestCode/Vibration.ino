@@ -55,8 +55,8 @@ void playComplex(){
 
   drv.selectLibrary(1);
   drv.setWaveform(0, 118);  // ramp up medium 1, see datasheet part 11.2
-//  drv.setWaveform(1, 1);  // strong click 100%, see datasheet part 11.2
-//  drv.setWaveform(2, 72);  // end of waveforms
+  drv.setWaveform(1, 1);  // strong click 100%, see datasheet part 11.2
+  drv.setWaveform(2, 72);  // end of waveforms
 
   drv.go();
 }
