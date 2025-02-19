@@ -12,7 +12,7 @@ int fadeAmount = 5;
 #define Titan1_SDA 1
 #define Titan2_SDA 2
 #define Titan1_PWM 42
-#define Titan2_PWM 41
+#define Titan2_PWM 14
 
 TwoWire Titan1 = TwoWire(0);
 TwoWire Titan2 = TwoWire(1);
@@ -20,8 +20,8 @@ TwoWire Titan2 = TwoWire(1);
 void setup() {
   Serial.begin(115200);
   Serial.println("Setting up dual Titan Haptics I2C bus");
-  Titan1.begin(Titan1_SDA, Titan1_SCL, 100000);
-  Titan2.begin(Titan2_SDA, Titan2_SCL, 100000);
+  Titan1.begin(Titan1_SDA, Titan1_SCL);
+  Titan2.begin(Titan2_SDA, Titan2_SCL);
 
   if(!drv1.begin(&Titan1)) {
     Serial.println("Could not find Haptic Driver 1");
@@ -29,7 +29,6 @@ void setup() {
   }
   drv1.selectLibrary(1);
   drv1.setMode(DRV2605_MODE_PWMANALOG); 
-  drv1.go();
 
   if(!drv2.begin(&Titan2)) {
     Serial.println("Could not find Haptic Driver 2");
@@ -37,19 +36,31 @@ void setup() {
   }
   drv2.selectLibrary(1);
   drv2.setMode(DRV2605_MODE_PWMANALOG); 
-  drv2.go();
 }
 
 void PWM(int pin){
-  analogWrite(pin, dutyCycle);
-  dutyCycle = dutyCycle + fadeAmount;
-  if (dutyCycle <= 0 || dutyCycle >= 255) {
-    fadeAmount = -fadeAmount;
+  if(pin == Titan1_PWM
+  ){
+    analogWrite(pin, dutyCycle);
+    dutyCycle = dutyCycle + fadeAmount;
+    if (dutyCycle <= 0 || dutyCycle >= 255) {
+      fadeAmount = -fadeAmount;
+    }
   }
+  else{
+    analogWrite(pin, (255-dutyCycle));
+    dutyCycle = dutyCycle + fadeAmount;
+    if (dutyCycle <= 0 || dutyCycle >= 255) {
+      fadeAmount = -fadeAmount;
+    }
+  }
+  
 }
 
 void loop(){
   PWM(Titan1_PWM);
   PWM(Titan2_PWM);
-  delay(30);
+  drv1.go();
+  drv2.go();
+  delay(300);
 }
