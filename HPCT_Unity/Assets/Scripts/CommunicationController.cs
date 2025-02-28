@@ -68,7 +68,6 @@ public class CommunicationController : MonoBehaviour
             {
                 byte[] bytes = listener.Receive(ref groupEP);
                 string senderIP = groupEP.Address.ToString();
-                print("Got Data");
                 ProcessMsg(bytes);
             }
         }
@@ -84,7 +83,6 @@ public class CommunicationController : MonoBehaviour
         {
             while (fingerData.TryDequeue(out float data))
             {
-                print("Data dequeued");
                 FingerTracking.Instance.updatePose(data);
             }
         }
@@ -111,34 +109,8 @@ public class CommunicationController : MonoBehaviour
     public void ProcessMsg(byte[] bytes)
     {
         string message = System.Text.Encoding.UTF8.GetString(bytes);
-        print(message);
-        string[] values = message.Split(',');
-
-        float[] data = new float[3];
-        for (int i = 0; i < values.Length; i++)
-        {
-            data[i] = float.Parse(values[i]);
-        }
-
-        switch (data[0])
-        {
-            case 1f:
-                // Peltier
-                break;
-            case 2f:
-                // Vibration
-                break;
-            case 3f:
-                // Force
-                break;
-            case 4f:
-                // Flex Sensor Data
-                print("Message received: Flex Sensor Data");
-                fingerData.Enqueue(data[1]);
-                break;
-            default:
-                print("Message received, but incorrect index");
-                break;
-        }
+        float flexvalue = float.Parse(message);
+        print("Message received: Flex Sensor Data");
+        fingerData.Enqueue(flexvalue);
     }
 }

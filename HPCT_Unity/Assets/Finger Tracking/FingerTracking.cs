@@ -35,15 +35,12 @@ public class FingerTracking : MonoBehaviour
         indexTip = indexMid.gameObject.transform.GetChild(0).gameObject;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        indexBase.transform.localEulerAngles = Vector3.right * flex * rotationLimit / 2;
-        indexMid.transform.localEulerAngles = Vector3.right * flex * rotationLimit;
-        indexTip.transform.localEulerAngles = Vector3.right * flex * rotationLimit;
-    }
     public void updatePose(float newPose)
     {
         flex = newPose;
+        indexBase.transform.localEulerAngles = Vector3.right * flex * rotationLimit / 2;
+        indexMid.transform.localEulerAngles = Vector3.right * flex * rotationLimit;
+        indexTip.transform.localEulerAngles = Vector3.right * flex * rotationLimit;
+        print("Finger Pose Updated");
     }
 }
