@@ -10,10 +10,6 @@ public class FingerTracking : MonoBehaviour
             if (_instance == null){
                 Debug.LogError("FingerTracking instance is null");
             }
-            else
-            {
-                Debug.LogError("Multiple instances of FingerTracking detected!");
-            }
             return _instance;
         }
     }

@@ -14,9 +14,9 @@ using System.Runtime.InteropServices;
 public class CommunicationController : MonoBehaviour
 {
     private const int listenPort = 11000;
-    UdpClient listener = new UdpClient(listenPort);
-    IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, listenPort);
-    IPAddress espIP = IPAddress.Parse("192.168.0.0");
+    private UdpClient listener;
+    private IPEndPoint groupEP;
+    private IPAddress espIP = IPAddress.Parse("192.168.0.0");
 
     public ConcurrentQueue<float> fingerData = new ConcurrentQueue<float>();
 
@@ -28,7 +28,7 @@ public class CommunicationController : MonoBehaviour
         {
             if (_instance == null)
             {
-                Debug.LogError("CommunicationController instance is null EEEEEeeeeeEEEEEeeeeeeeeEeeEeeeeeeeeEEEEEeeee");
+                Debug.LogError("CommunicationController instance is null");
             }
             return _instance;
         }
@@ -42,9 +42,22 @@ public class CommunicationController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        print("Starting Communication thread");
-        Thread msgThread = new Thread(ReceiveMessages);
-        msgThread.Start();
+        try
+        {
+            listener = new UdpClient(listenPort);
+            groupEP = new IPEndPoint(IPAddress.Any, listenPort);
+            print("Starting Communication thread");
+            Thread msgThread = new Thread(ReceiveMessages);
+            msgThread.Start();
+        }
+        catch (SocketException e)
+        {
+            Debug.LogError($"SocketException: {e.Message}");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Exception: {e.Message}");
+        }
     }
 
     private void ReceiveMessages()
@@ -67,13 +80,16 @@ public class CommunicationController : MonoBehaviour
 
     void Update()
     {
-        if (FingerTracking.Instance != null) {
-            while (fingerData.TryDequeue(out float data)){
+        if (FingerTracking.Instance != null && fingerData != null)
+        {
+            while (fingerData.TryDequeue(out float data))
+            {
                 print("Data dequeued");
                 FingerTracking.Instance.updatePose(data);
             }
         }
     }
+
     public void SendMsg(string msg)
     {
         try
@@ -83,7 +99,8 @@ public class CommunicationController : MonoBehaviour
             byte[] sendbuf = Encoding.ASCII.GetBytes(msg);
             IPEndPoint ep = new IPEndPoint(espIP, listenPort);
 
-            s.SendTo(sendbuf, ep); s.Close();
+            s.SendTo(sendbuf, ep);
+            s.Close();
         }
         catch (SocketException e)
         {
@@ -98,7 +115,7 @@ public class CommunicationController : MonoBehaviour
         string[] values = message.Split(',');
 
         float[] data = new float[3];
-        for (int i = 0; i < Marshal.SizeOf(values); i++)
+        for (int i = 0; i < values.Length; i++)
         {
             data[i] = float.Parse(values[i]);
         }
