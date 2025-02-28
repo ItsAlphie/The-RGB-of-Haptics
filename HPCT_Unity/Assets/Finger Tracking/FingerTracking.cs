@@ -4,6 +4,24 @@ using UnityEngine;
 
 public class FingerTracking : MonoBehaviour
 {
+    private static FingerTracking _instance;
+    public static FingerTracking Instance{
+        get{
+            if (_instance == null){
+                Debug.LogError("FingerTracking instance is null");
+            }
+            else
+            {
+                Debug.LogError("Multiple instances of FingerTracking detected!");
+            }
+            return _instance;
+        }
+    }
+
+    private void Awake(){
+        _instance = this;
+    }
+
     [Range(0.0f, 1.0f)] 
     public float flex = 1f;
 
@@ -27,5 +45,9 @@ public class FingerTracking : MonoBehaviour
         indexBase.transform.localEulerAngles = Vector3.right * flex * rotationLimit / 2;
         indexMid.transform.localEulerAngles = Vector3.right * flex * rotationLimit;
         indexTip.transform.localEulerAngles = Vector3.right * flex * rotationLimit;
+    }
+    public void updatePose(float newPose)
+    {
+        flex = newPose;
     }
 }
