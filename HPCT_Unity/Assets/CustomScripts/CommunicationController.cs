@@ -46,7 +46,7 @@ public class CommunicationController : MonoBehaviour
         {
             listener = new UdpClient(listenPort);
             groupEP = new IPEndPoint(IPAddress.Any, listenPort);
-            print("Starting Communication thread");
+            Debug.Log("Starting Communication thread");
             Thread msgThread = new Thread(ReceiveMessages);
             msgThread.Start();
         }
@@ -73,7 +73,7 @@ public class CommunicationController : MonoBehaviour
         }
         catch (SocketException e)
         {
-            print(e);
+            Debug.LogError(e);
         }
     }
 
@@ -92,17 +92,18 @@ public class CommunicationController : MonoBehaviour
     {
         try
         {
-            Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            Debug.Log("Sending message: " + msg);
+            /*Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
             byte[] sendbuf = Encoding.ASCII.GetBytes(msg);
             IPEndPoint ep = new IPEndPoint(espIP, listenPort);
 
             s.SendTo(sendbuf, ep);
-            s.Close();
+            s.Close();*/
         }
         catch (SocketException e)
         {
-            print(e);
+            Debug.LogError(e);
         }
     }
 
@@ -110,7 +111,7 @@ public class CommunicationController : MonoBehaviour
     {
         string message = System.Text.Encoding.UTF8.GetString(bytes);
         float flexvalue = float.Parse(message);
-        print("Message received: Flex Sensor Data");
+        Debug.Log("Message received: Flex Sensor Data");
         fingerData.Enqueue(flexvalue);
     }
 }

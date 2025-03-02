@@ -45,6 +45,6 @@ public class FingerTracking : MonoBehaviour
     public void updatePose(float newPose)
     {
         flex = newPose;
-        print("Finger Pose Updated");
+        Debug.Log("Finger Pose Updated: " + flex);
     }
 }
