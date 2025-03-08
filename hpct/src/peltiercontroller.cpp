@@ -1,13 +1,15 @@
 #include "peltiercontroller.h"
 
-PeltierController::PeltierController(int pPin1, int pPin2, int thPin, float KpVal) : peltierDriverPin1{pPin1}, peltierDriverPin2{pPin2}, thermistorPin{thPin}, Kp{KpVal}
+PeltierController::PeltierController(int pPin1, int pPin2, int thPin, int KpVal) : peltierDriverPin1{pPin1}, peltierDriverPin2{pPin2}, thermistorPin{thPin}, Kp{KpVal}
 {
     pinMode(thermistorPin, INPUT);
     pinMode(peltierDriverPin1, OUTPUT);
     pinMode(peltierDriverPin2, OUTPUT);
+
+    analogReadResolution(12);
 }
 
-void PeltierController::setDesiredTemp(float temp)
+void PeltierController::setDesiredTemp(int temp)
 {
     desiredTemp = temp;
 }
@@ -36,40 +38,53 @@ void PeltierController::temperatureControl()
         digitalWrite(peltierDriverPin2, LOW);
     }
     Serial.println("------");
-    delay(1000);
 }
+
 
 void PeltierController::readThermistor()
 {
-    float voltage = analogRead(thermistorPin) * (5.0f / 1023.0f);
+    float voltage = analogRead(thermistorPin) * (3.3f / 4095.0f);
     Serial.print("Current voltage read: ");
     Serial.println(voltage);
-    // float thermistorValue = 10000.0f * ((5.0f / voltage) - 1.0f); // voltage divider
-    float thermistorValue = ((voltage/5.0f)*10000.0f)/(1.0f-(voltage/5.0f));
-    currentTemp = 9.5093e-8f * thermistorValue * thermistorValue - 0.0047f * thermistorValue + 63.342f;
+    float thermistorValue = 10000.0f * ((3.3f / voltage) - 1.0f); // voltage divider
+    Serial.print("Current thermistor read: ");
+    Serial.println(thermistorValue);
+    // float thermistorValue = ((voltage/3.3f)*10000.0f)/(1.0f-(voltage/3.3f));
+    // currentTemp = 9.5093e-8f * thermistorValue * thermistorValue - 0.0047f * thermistorValue + 63.342f;
+    currentTemp = interpolate(thermistorValue);
     Serial.print("Current temperature: ");
     Serial.println(currentTemp);
 }
 
-
+float PeltierController::interpolate(float resistanceValue)
+{   
+    for (int i = 0; i < POINTS - 1; i++) {
+        if (resistanceValue <= rt_array[i] && resistanceValue >= rt_array[i + 1]) {
+            return (temp_array[i] + (resistanceValue - rt_array[i]) *
+                (temp_array[i + 1] - temp_array[i]) /
+                (rt_array[i + 1] - rt_array[i]));
+        }
+    }
+    return -999;
+}
 
 
 void PeltierController::calculateError()
 {
     error = desiredTemp - currentTemp;
+    Serial.print("Error is: ");
+    Serial.println(error);
 }
 
 void PeltierController::enable()
 {   
     enabled = true;
-    temperatureControl();
-    Serial.print("Error is: ");
-    Serial.println(error);
 
 }
 
 void PeltierController::disable()
-{
+{   
+    enabled = false;
     Serial.println("Peltier element disabled");
     digitalWrite(peltierDriverPin1, LOW);
     digitalWrite(peltierDriverPin2, LOW);
@@ -79,3 +94,4 @@ bool PeltierController::isEnabled()
 {
     return enabled;
 }
+
