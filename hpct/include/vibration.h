@@ -31,7 +31,8 @@
 
 // ----------------
 
-class Vibration {
+class Vibration
+{
 private:
     SFE_HMD_DRV2605L HMD;
     int fadeAmount = 5;
@@ -42,7 +43,7 @@ private:
     int motors[2] = {PIN1, PIN2};
     int pwm[2] = {PWM_CHANNEL_0, PWM_CHANNEL_1};
     int mpx[2] = {3, 2};
-    
+
 public:
     Vibration();
     void setFrequency(int motor, int frequency);
@@ -53,6 +54,5 @@ public:
     bool isEnabled();
     void init();
 };
-
 
 #endif

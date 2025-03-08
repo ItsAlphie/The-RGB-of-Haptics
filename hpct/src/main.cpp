@@ -11,9 +11,6 @@
 // WiFi credentials
 #define ssid "Redmi"         // Replace with your WiFi SSID
 #define password "galagala"           // Replace with your WiFi password
-// IPAddress ip(192, 168, 161, 1);
-// IPAddress gateway(192, 168, 24, 20);
-// IPAddress subnet(255, 255, 255, 0);
 
 // Server settings
 #define serverIP "192.168.161.91"      // Unity server's IP address  
