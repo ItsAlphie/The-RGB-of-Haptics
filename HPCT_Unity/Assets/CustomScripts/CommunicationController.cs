@@ -93,13 +93,13 @@ public class CommunicationController : MonoBehaviour
         try
         {
             Debug.Log("Sending message: " + msg);
-            /*Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
             byte[] sendbuf = Encoding.ASCII.GetBytes(msg);
             IPEndPoint ep = new IPEndPoint(espIP, listenPort);
 
             s.SendTo(sendbuf, ep);
-            s.Close();*/
+            s.Close();
         }
         catch (SocketException e)
         {
