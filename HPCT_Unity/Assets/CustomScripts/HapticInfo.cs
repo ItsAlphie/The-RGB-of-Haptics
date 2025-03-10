@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System;
+using System.Diagnostics;
 
 [CustomEditor(typeof(HapticInfo))]
 public class DropdownEditor : Editor
@@ -55,4 +57,27 @@ public class HapticInfo : MonoBehaviour
     [Range(0.0f, 1.0f)] public float Roughness = 0f;
     [Range(0.0f, 1.0f)] public float BumpsSize = 0f;
     [Range(-1.0f, 1.0f)] public float Temperature = 0f;
+
+    public Boolean sendData = false;
+    public Boolean activate = false;
+    public Boolean deactivate = false;
+
+    void Update()
+    {
+        // Buttons for testing purposes
+        if (sendData){
+            CommunicationController.Instance.SendMsg("1," + Roughness.ToString() + ","
+                + BumpsSize.ToString() + "," + Temperature.ToString());
+            sendData = false;
+        }
+        if (activate){
+            CommunicationController.Instance.SendMsg("2,1");
+            activate = false;
+        }
+        if (deactivate){
+            CommunicationController.Instance.SendMsg("0");
+            deactivate = false;
+        }
+    }
+
 }
