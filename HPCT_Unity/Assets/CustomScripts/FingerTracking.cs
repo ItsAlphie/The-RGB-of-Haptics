@@ -42,9 +42,9 @@ public class FingerTracking : MonoBehaviour
         indexMid.transform.localEulerAngles = Vector3.right * flex * rotationLimit;
         indexTip.transform.localEulerAngles = Vector3.right * flex * rotationLimit;
     }
-    public void updatePose(float newPose)
+    public void updatePose(float voltage)
     {
-        flex = newPose;
+        flex = 1f - (voltage-1.4f)/1.9f;
         Debug.Log("Finger Pose Updated: " + flex);
     }
 }
