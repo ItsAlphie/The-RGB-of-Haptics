@@ -46,7 +46,7 @@ void PeltierController::readThermistor()
     Serial.print("Current voltage read: ");
     Serial.println(voltage);
 
-    float thermistorValue = 10000.0f * ((3.3f / voltage) - 1.0f); // voltage divider
+    float thermistorValue = - (10000.0f*voltage)/(voltage - 5.0f);
     Serial.print("Current thermistor read: ");
     Serial.println(thermistorValue);
     

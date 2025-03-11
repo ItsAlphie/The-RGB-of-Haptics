@@ -13,8 +13,8 @@
 #define password "galagala"           // Replace with your WiFi password
 
 // Server settings
-#define serverIP "192.168.161.91"      // Unity server's IP address  
-#define serverPort 11000               // Unity server's port
+#define serverIP "192.168.196.91"      // Unity server's IP address  
+#define serverPort 11069               // Unity server's port
 
 WiFiUDP udp;
 char incomingPacket[64];  // Buffer to hold incoming message
@@ -29,6 +29,9 @@ Servo servoMotor;
 int pos = 0;
 
 PeltierController peltierController(4,6,1,1);
+
+// Flex sensor
+int flexPin = 2;
 
 // -----------------------------------------------------------------
 TaskHandle_t TemperatureControlTask;
@@ -49,13 +52,32 @@ void connectWifi(){
   udp.begin(serverPort);
 }
 
+void sendMessage(float message){
+  // char buffer[10];
+  // sprintf (buffer, "%d", message);
+  String buffer = String(message);
+  udp.beginPacket(serverIP, serverPort);
+  udp.print(buffer);
+  udp.endPacket();
+}
+
+
+void sendFlexValue(){
+  float flexValue= analogRead(flexPin) * (3.3f / 4095.0f);;
+  sendMessage(flexValue);
+  Serial.print("Flex Value is: ");
+  Serial.println(flexValue);
+}
+
 void temperatureControl(void * pvParameters){
   while(1){
       if(peltierController.isEnabled()){
         peltierController.temperatureControl();
   }
-  vTaskDelay(2000);
+  sendFlexValue();
+  vTaskDelay(200);
   }
+  
 }
 
 const char * receiveMessage() {
@@ -73,15 +95,15 @@ const char * receiveMessage() {
   return "";  // Return an empty String if no message was received
 }
 
-
 void setup() {
 
   Serial.begin(9600);
+  connectWifi();
 
   xTaskCreatePinnedToCore(
                 temperatureControl,   /* Task function. */
                 "TemperatureControl",     /* name of task. */
-                2000,       /* Stack size of task */
+                3000,       /* Stack size of task */
                 NULL,        /* parameter of the task */
                 0,           /* priority of the task */
                 &TemperatureControlTask,      /* Task handle to keep track of created task */
@@ -90,7 +112,7 @@ void setup() {
 
   servoMotor.attach(19); 
 
-  connectWifi();
+
 
   vibration.init();
 
