@@ -30,6 +30,12 @@ public class DropdownEditor : Editor
         {
             case 0:
                 // Custom
+                script.Roughness = 0f;
+                script.RoughnessDensity = 0f;
+                script.BumpSize = 0f;
+                script.BumpDensity = 0f;
+                script.Hardness = 1f;
+                script.Temperature = 0f;
                 break;
             case 1:
                 // Wood
