@@ -34,13 +34,19 @@ public class DropdownEditor : Editor
             case 1:
                 // Wood
                 script.Roughness = 0.95f;
-                script.BumpsSize = 0.2f;
+                script.RoughnessDensity = 0.5f;
+                script.BumpSize = 0.2f;
+                script.BumpDensity = 0.1f;
+                script.Hardness = 1f;
                 script.Temperature = 0f;
                 break;
             case 2:
                 // Steel
                 script.Roughness = 0.48f;
-                script.BumpsSize = 0f;
+                script.RoughnessDensity = 0.5f;
+                script.BumpSize = 0f;
+                script.BumpDensity = 0.1f;
+                script.Hardness = 1f;
                 script.Temperature = -0.76f;
                 break;
         }
@@ -55,8 +61,13 @@ public class HapticInfo : MonoBehaviour
     public string[] Presets = new string[] { "Custom", "Wood", "Steel" };
 
     [Range(0.0f, 1.0f)] public float Roughness = 0f;
-    [Range(0.0f, 1.0f)] public float BumpsSize = 0f;
+    [Range(0.0f, 1.0f)] public float RoughnessDensity = 0f;
+    [Range(0.0f, 1.0f)] public float BumpSize = 0f;
+    [Range(0.0f, 1.0f)] public float BumpDensity = 0f;
+    [Range(0.0f, 1.0f)] public float Hardness = 0f;
     [Range(-1.0f, 1.0f)] public float Temperature = 0f;
+
+    public int actualAngle = 0;
 
     public Boolean sendData = false;
     public Boolean activate = false;
@@ -66,18 +77,32 @@ public class HapticInfo : MonoBehaviour
     {
         // Buttons for testing purposes
         if (sendData){
-            CommunicationController.Instance.SendMsg("1," + Roughness.ToString() + ","
-                + BumpsSize.ToString() + "," + Temperature.ToString());
+            CommunicationController.Instance.SendMsg("1," +
+                (Temperature * 10 + 30).ToString() + "," +
+                Roughness.ToString() + "," +
+                BumpSize.ToString());
             sendData = false;
         }
         if (activate){
-            CommunicationController.Instance.SendMsg("2,1");
+            CommunicationController.Instance.SendMsg("2," +
+                "50," +
+                "50," +
+                "40");
             activate = false;
         }
         if (deactivate){
-            CommunicationController.Instance.SendMsg("0");
+            CommunicationController.Instance.SendMsg("0,0,0,0");
             deactivate = false;
         }
     }
 
+    public int getActualAngle()
+    {
+        return actualAngle;
+    }
+
+    public void setActualAngle(int angle)
+    {
+        actualAngle = angle;
+    }
 }

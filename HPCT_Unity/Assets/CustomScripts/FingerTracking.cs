@@ -19,7 +19,7 @@ public class FingerTracking : MonoBehaviour
     }
 
     [Range(0.0f, 1.0f)] 
-    public float flex = 1f;
+    public float flex = 0f;
 
     // Assign in the inspector
     public GameObject indexBase;
@@ -45,6 +45,5 @@ public class FingerTracking : MonoBehaviour
     public void updatePose(float voltage)
     {
         flex = 1f - (voltage-1.4f)/1.9f;
-        Debug.Log("Finger Pose Updated: " + flex);
     }
 }
