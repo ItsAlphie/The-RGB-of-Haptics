@@ -34,26 +34,26 @@ public class DropdownEditor : Editor
                 script.RoughnessDensity = 0f;
                 script.BumpSize = 0f;
                 script.BumpDensity = 0f;
-                script.Hardness = 1f;
+                script.Hardness = 0f;
                 script.Temperature = 0f;
                 break;
             case 1:
                 // Wood
-                script.Roughness = 0.95f;
-                script.RoughnessDensity = 0.5f;
-                script.BumpSize = 0.2f;
-                script.BumpDensity = 0.1f;
-                script.Hardness = 1f;
-                script.Temperature = 0f;
+                script.Roughness = 0.66f;
+                script.RoughnessDensity = 0.80f;
+                script.BumpSize = 0.5f;
+                script.BumpDensity = 0.20f;
+                script.Hardness = 0.9f;
+                script.Temperature = 0.1f;
                 break;
             case 2:
                 // Steel
-                script.Roughness = 0.48f;
-                script.RoughnessDensity = 0.5f;
+                script.Roughness = 0.33f;
+                script.RoughnessDensity = 0.80f;
                 script.BumpSize = 0f;
-                script.BumpDensity = 0.1f;
+                script.BumpDensity = 0f;
                 script.Hardness = 1f;
-                script.Temperature = -0.76f;
+                script.Temperature = -0.7f;
                 break;
         }
     }
@@ -72,8 +72,6 @@ public class HapticInfo : MonoBehaviour
     [Range(0.0f, 1.0f)] public float BumpDensity = 0f;
     [Range(0.0f, 1.0f)] public float Hardness = 0f;
     [Range(-1.0f, 1.0f)] public float Temperature = 0f;
-
-    public int actualAngle = 0;
 
     public Boolean sendData = false;
     public Boolean activate = false;
@@ -100,15 +98,5 @@ public class HapticInfo : MonoBehaviour
             CommunicationController.Instance.SendMsg("0,0,0,0");
             deactivate = false;
         }
-    }
-
-    public int getActualAngle()
-    {
-        return actualAngle;
-    }
-
-    public void setActualAngle(int angle)
-    {
-        actualAngle = angle;
     }
 }

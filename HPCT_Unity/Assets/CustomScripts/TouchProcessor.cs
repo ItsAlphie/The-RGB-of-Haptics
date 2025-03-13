@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -72,6 +73,7 @@ public class TouchProcessor : MonoBehaviour
                 100 * averageVelocity / maxVelocity);
 
             // P-controller to adjust the servo angle based on the depth of the finger
+            /*
             float colliderDistance = Vector3.Distance(transform.position, 
                 other.ClosestPoint(transform.position));
             float depth = 1 - (10000 * (colliderDistance)) / 237;
@@ -80,10 +82,23 @@ public class TouchProcessor : MonoBehaviour
             int currentAngle = hapticInfo.getActualAngle();
             int angleOffset = goalAngle - currentAngle;
 
-            int servoAngle = (int)(currentAngle + angleOffset * ((hapticInfo.Hardness + 0.1) / 1.1));
-            hapticInfo.setActualAngle(servoAngle);
-            Debug.Log("New Servo Angle: " + servoAngle);
+            int servoAngle = (int)(currentAngle + angleOffset * ((hapticInfo.Hardness + 0.1) / 1.1)); */
 
+            // Adjustable force range: Harder material = shorter range
+            float colliderDistance = Vector3.Distance(transform.position,
+                other.ClosestPoint(transform.position));
+            float depth = 1 - (10000 * (colliderDistance)) / 237;
+            float maxDepth = 1.001f - hapticInfo.Hardness;
+
+            int servoAngle = (int)(180 * (depth / maxDepth));
+            if (servoAngle > 180){
+                servoAngle = 180;
+            }
+            else if (servoAngle < 0){
+                servoAngle = 0;
+            }
+
+            Debug.Log("New Servo Angle: " + servoAngle);
             CommunicationController.Instance.SendMsg("2," + 
                 roughnessFrequency.ToString() + "," + 
                 bumpsFrequency.ToString() + "," + 
@@ -96,7 +111,6 @@ public class TouchProcessor : MonoBehaviour
         HapticInfo hapticInfo = other.gameObject.GetComponent<HapticInfo>();
         if (hapticInfo != null)
         {
-            hapticInfo.setActualAngle(0);
             CommunicationController.Instance.SendMsg("0,0,0,0");
         }
     }
