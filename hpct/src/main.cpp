@@ -9,18 +9,25 @@
 // ------------------------- WIFI -----------------------------
 // https://github.com/m5stack/azure_iothub_arduino_lib_esp32/blob/master/hardware/espressif/esp32/libraries/WiFi/examples/WiFiUDPClient/WiFiUDPClient.ino 
 // WiFi credentials
+// #define ssid "Redmi"         // Replace with your WiFi SSID
+// #define password "galagala"           // Replace with your WiFi password
+
 #define ssid "Redmi"         // Replace with your WiFi SSID
 #define password "galagala"           // Replace with your WiFi password
 
 // Server settings
-#define serverIP "192.168.196.91"      // Unity server's IP address  
-#define serverPort 11069               // Unity server's port
+#define serverIP "192.168.24.91"      // Unity server's IP address  
+#define serverPort 11069             // Unity server's port
+
 
 WiFiUDP udp;
 char incomingPacket[64];  // Buffer to hold incoming message
 
-int module;
-int parameter;
+int command;
+int parameter_0;
+int parameter_1;
+int parameter_2;
+
 
 // ------------------------- HARDWARE -----------------------------
 Vibration vibration;
@@ -34,7 +41,7 @@ PeltierController peltierController(4,6,1,1);
 int flexPin = 2;
 
 // -----------------------------------------------------------------
-TaskHandle_t TemperatureControlTask;
+TaskHandle_t TemperatureAndFlexControlTask;
 
 
 void connectWifi(){
@@ -65,19 +72,18 @@ void sendMessage(float message){
 void sendFlexValue(){
   float flexValue= analogRead(flexPin) * (3.3f / 4095.0f);;
   sendMessage(flexValue);
-  Serial.print("Flex Value is: ");
-  Serial.println(flexValue);
+  // Serial.print("Flex Value is: ");
+  // Serial.println(flexValue);
 }
 
-void temperatureControl(void * pvParameters){
+void temperatureAndFlexControl(void * pvParameters){
   while(1){
       if(peltierController.isEnabled()){
         peltierController.temperatureControl();
+      }
+  // sendFlexValue();
+  vTaskDelay(1000);
   }
-  sendFlexValue();
-  vTaskDelay(200);
-  }
-  
 }
 
 const char * receiveMessage() {
@@ -101,12 +107,12 @@ void setup() {
   connectWifi();
 
   xTaskCreatePinnedToCore(
-                temperatureControl,   /* Task function. */
-                "TemperatureControl",     /* name of task. */
+                temperatureAndFlexControl,   /* Task function. */
+                "TemperatureAndFlexControl",     /* name of task. */
                 3000,       /* Stack size of task */
                 NULL,        /* parameter of the task */
                 0,           /* priority of the task */
-                &TemperatureControlTask,      /* Task handle to keep track of created task */
+                &TemperatureAndFlexControlTask,      /* Task handle to keep track of created task */
                 0);          /* pin task to core 1 */
   delay(500);
 
@@ -162,100 +168,50 @@ void loop() {
 
 // ------------------------- UDP COMM -----------------------------
 
-/**
-+-----------------------------------------+------+
-| Function                                | Code |
-+-----------------------------------------+------+
-| *** Peltier ***                         |      |
-| Peltier enable                          | 0:0  |
-| Peltier disable                         | 0:1  |
-| Peltier desired temperature set to %d   | 1:%d |
-|                                         |      |
-| *** Vibration ***                       |      |
-| Titan haptic motor 1 enable             | 2:0  |
-| Titan haptic motor 2 enable             | 2:1  |
-| Titan haptic motor 1 disable            | 2:2  |
-| Titan haptic motor 2 disable            | 2:3  |
-| Titan haptic motor 1 frequency set to %d| 3:%d |
-| Titan haptic motor 2 frequency set to %d| 4:%d |
-| Titan haptic motor 1 strength set to %d | 5:%d |
-| Titan haptic motor 2 strength set to %d | 6:%d |
-|                                         |      |
-| *** ServoMotor ***                      |      |
-| Servo motor set to %d degrees           | 7:%d |
-+-----------------------------------------+------+
+/* 
+  * Stop: 0,0,0,0
+
+  * Set: 1,%d,%d,%d
+    - desired temperature [20-40]
+    - Titan haptic motor 1: set strength [0-255]
+    - Titan haptic motor 2: set strength [0-255]
+
+  * Continuous: 2,%d,%d,$d
+    - Titan haptic motor 1: set frequency [0-100]
+    - Titan haptic motor 2: set frequency [0-100]
+    - Servo angle [0-180] 
 */
 
-  if (sscanf(receiveMessage(), "%d:%d", &module, &parameter) == 2) {
-      switch(module){
-        case 0:
-            switch(parameter){
-              case 0:
-                peltierController.enable();
-                break;
-              
-              case 1:
-                peltierController.disable();
-                break;
-              
-              default:
-                Serial.println("Invalid command");
-            }
-          break;
 
-        case 1:
-          peltierController.setDesiredTemp(parameter);
-          break;
 
-        case 2:
-          switch(parameter){
-            case 0:
-              vibration.enable(0);
-              break;
-            
-            case 1:
-              vibration.enable(1);
-              break;
+  if(sscanf(receiveMessage(), "%d,%d,%d,%d",&command, &parameter_0, &parameter_1, &parameter_2) ==4){
+    switch(command){
+      case 0:
+        peltierController.setDesiredTemp(25);
+        vibration.disable(0);
+        vibration.disable(1);
+        servoMotor.write(0);
 
-            case 2:
-              vibration.disable(0);
-              break;
-            
-            case 3:
-              vibration.disable(1);
-              break;
-            
-            default:
-              Serial.println("Invalid command");
+        break;
 
-          }
+      case 1:
+        peltierController.enable();
+        peltierController.setDesiredTemp(parameter_0);
 
-          break;
+        vibration.setStrength(0, parameter_1);
+        vibration.setStrength(1, parameter_2);
 
-        case 3:
-          vibration.setFrequency(0, parameter);
-          break;
+        break;
+      
+      case 2:
 
-        case 4:
-          vibration.setFrequency(1, parameter);
-          break;
+        vibration.setFrequency(0, parameter_0);
+        vibration.setFrequency(1, parameter_1);
+        servoMotor.write(parameter_2);
 
-        case 5:
-          vibration.setStrength(0, parameter);
-          break;
+        break;
 
-        case 6:
-          vibration.setStrength(1, parameter);
-          break;
-
-        case 7:
-          servoMotor.write(parameter);
-          break;
-
-        default:
-          Serial.println("Invalid command");
-          
-      }
+    }
   }
 
 }

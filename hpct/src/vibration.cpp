@@ -56,13 +56,28 @@ void Vibration::drive(int motor) // possibly leave out enabled
 void Vibration::setFrequency(int motor, int frequency)
 {
   this->frequency[motor] = frequency;
-  drive(motor);
+
+  if(frequency==0){
+    disable(motor);
+  }
+  else{
+    enable(motor);
+    this->frequency[motor] = frequency;
+    drive(motor);
+  }
 }
 
 void Vibration::setStrength(int motor, int strength)
 {
   dutyCycle[motor] = strength;
-  drive(motor);
+
+  if(strength == 0){
+    disable(motor);
+  }
+  else{
+    enable(motor);
+    drive(motor);
+  }
 }
 
 bool Vibration::isEnabled()
