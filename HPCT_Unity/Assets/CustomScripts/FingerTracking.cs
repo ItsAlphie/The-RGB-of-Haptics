@@ -19,7 +19,7 @@ public class FingerTracking : MonoBehaviour
     }
 
     [Range(0.0f, 1.0f)] 
-    public float flex = 1f;
+    public float flex = 0f;
 
     // Assign in the inspector
     public GameObject indexBase;
@@ -42,9 +42,8 @@ public class FingerTracking : MonoBehaviour
         indexMid.transform.localEulerAngles = Vector3.right * flex * rotationLimit;
         indexTip.transform.localEulerAngles = Vector3.right * flex * rotationLimit;
     }
-    public void updatePose(float newPose)
+    public void updatePose(float voltage)
     {
-        flex = newPose;
-        Debug.Log("Finger Pose Updated: " + flex);
+        flex = 1f - (voltage-1.4f)/1.9f;
     }
 }

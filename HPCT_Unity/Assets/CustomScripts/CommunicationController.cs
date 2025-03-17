@@ -9,14 +9,14 @@ using System.Text;
 using System.Threading;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Runtime.InteropServices;
 
 public class CommunicationController : MonoBehaviour
 {
-    private const int listenPort = 11000;
+    private const int listenPort = 11069;
+    private const int sendPort = 11000;
     private UdpClient listener;
     private IPEndPoint groupEP;
-    private IPAddress espIP = IPAddress.Parse("192.168.0.0");
+    private IPAddress espIP = IPAddress.Parse("192.168.196.196");
 
     public ConcurrentQueue<float> fingerData = new ConcurrentQueue<float>();
 
@@ -93,13 +93,13 @@ public class CommunicationController : MonoBehaviour
         try
         {
             Debug.Log("Sending message: " + msg);
-            /*Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
             byte[] sendbuf = Encoding.ASCII.GetBytes(msg);
-            IPEndPoint ep = new IPEndPoint(espIP, listenPort);
+            IPEndPoint ep = new IPEndPoint(espIP, sendPort);
 
             s.SendTo(sendbuf, ep);
-            s.Close();*/
+            s.Close();
         }
         catch (SocketException e)
         {
@@ -110,8 +110,8 @@ public class CommunicationController : MonoBehaviour
     public void ProcessMsg(byte[] bytes)
     {
         string message = System.Text.Encoding.UTF8.GetString(bytes);
+        Debug.Log("Received message: " + message);
         float flexvalue = float.Parse(message);
-        Debug.Log("Message received: Flex Sensor Data");
         fingerData.Enqueue(flexvalue);
     }
 }
