@@ -8,8 +8,9 @@ public class TouchProcessor : MonoBehaviour
     private Vector3 previousPosition;
     private Vector3 velocity;
     private Queue<float> velocitySamples = new Queue<float>();
-    private const int sampleSize = 20;
-    private float maxVelocity = 1.5f;
+    private const int sampleSize = 35;
+    private int counter = 0;
+    private float maxVelocity = 1f;
 
     void Start()
     {
@@ -64,20 +65,43 @@ public class TouchProcessor : MonoBehaviour
         HapticInfo hapticInfo = other.gameObject.GetComponent<HapticInfo>();
         if (hapticInfo != null)
         {
+            while (counter < sampleSize)
+            {
+                counter += 1;
+                break;
+            }
+            counter = 0;
             // Linearly scaling the frequency of bumps and roughness based on the finger's velocity
             float averageVelocity = CalculateAverageVelocity();
-
-            int bumpsFrequency = (int)(hapticInfo.BumpDensity * 
-                100 * averageVelocity / maxVelocity);
-            int roughnessFrequency = (int)(hapticInfo.RoughnessDensity * 
-                100 * averageVelocity / maxVelocity);
+            int bumpsFrequency = 0;
+            int roughnessFrequency = 0;
+            if (averageVelocity >= maxVelocity)
+            {
+                bumpsFrequency = (int)(hapticInfo.BumpDensity) * 9;
+                roughnessFrequency = (int)(hapticInfo.RoughnessDensity) * 150;
+            }
+            else if (averageVelocity > (maxVelocity) * 2 / 3)
+            {
+                bumpsFrequency = (int)(hapticInfo.BumpDensity) * 6;
+                roughnessFrequency = (int)(hapticInfo.RoughnessDensity) * 100;
+            }
+            else if (averageVelocity > (maxVelocity) * 2 / 3)
+            {
+                bumpsFrequency = (int)(hapticInfo.BumpDensity) * 3;
+                roughnessFrequency = (int)(hapticInfo.RoughnessDensity) * 50;
+            }
+            else
+            {
+                bumpsFrequency = 0;
+                roughnessFrequency = 0;
+            }
 
             // P-controller to adjust the servo angle based on the depth of the finger
             /*
             float colliderDistance = Vector3.Distance(transform.position, 
                 other.ClosestPoint(transform.position));
             float depth = 1 - (10000 * (colliderDistance)) / 237;
-            
+
             int goalAngle = (int) (180 * depth);
             int currentAngle = hapticInfo.getActualAngle();
             int angleOffset = goalAngle - currentAngle;
@@ -90,6 +114,10 @@ public class TouchProcessor : MonoBehaviour
             float depth = 1 - (10000 * (colliderDistance)) / 237;
             float maxDepth = 1.001f - hapticInfo.Hardness;
 
+            if (depth < 0)
+            {
+                depth = - depth;
+            }
             int servoAngle = (int)(180 * (depth / maxDepth));
             if (servoAngle > 180){
                 servoAngle = 180;
@@ -111,6 +139,8 @@ public class TouchProcessor : MonoBehaviour
         HapticInfo hapticInfo = other.gameObject.GetComponent<HapticInfo>();
         if (hapticInfo != null)
         {
+            CommunicationController.Instance.SendMsg("0,0,0,0");
+            CommunicationController.Instance.SendMsg("0,0,0,0");
             CommunicationController.Instance.SendMsg("0,0,0,0");
         }
     }

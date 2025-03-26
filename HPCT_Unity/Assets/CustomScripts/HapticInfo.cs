@@ -82,16 +82,16 @@ public class HapticInfo : MonoBehaviour
         // Buttons for testing purposes
         if (sendData){
             CommunicationController.Instance.SendMsg("1," +
-                (Temperature * 10 + 30).ToString() + "," +
-                Roughness.ToString() + "," +
-                BumpSize.ToString());
+                (Temperature * 10 + 30).ToString()+ "," +
+                (Roughness * 255).ToString() + "," +
+                (BumpSize * 255).ToString());
             sendData = false;
         }
         if (activate){
             CommunicationController.Instance.SendMsg("2," +
-                "50," +
-                "50," +
-                "40");
+                "5," +
+                "5," +
+                "270");
             activate = false;
         }
         if (deactivate){
