@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &6360905600565478615
+--- !u!1001 &3269929129302585923
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -116,33 +116,13 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3086407508084631400, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3086407508084631400, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3086407508084631400, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3086407508084631400, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3086407508084631400, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5975590138830302261, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6082584781570997397, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
       propertyPath: m_Name
-      value: Test1A
+      value: Test1B_1
       objectReference: {fileID: 0}
     - target: {fileID: 7677722742859097926, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
       propertyPath: m_AnchorMax.y
