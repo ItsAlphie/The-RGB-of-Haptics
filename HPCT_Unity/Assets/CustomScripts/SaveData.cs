@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class SaveData : MonoBehaviour
 {
     public Button quitButton;
-    public GameObject[] panels;
+    public GameObject panels;
 
     void Start()
     {
@@ -28,33 +29,30 @@ public class SaveData : MonoBehaviour
 
     void SaveUserData()
     {
-        /*/ TODO: differentiate between test types
-        foreach (GameObject panel in panels)
-        {
-            GameObject test = this.gameObject.transform.GetChild(1).GetChild(3).
+        // TODO: differentiate between test types
+        for (int i = 0; i < panels.transform.childCount; i++)
+        {   
+            GameObject panel = panels.transform.GetChild(i).GetChild(1).gameObject;
+            GameObject test = panel.gameObject.transform.GetChild(1).GetChild(3).
                 GetChild(0).GetChild(0).gameObject;
+
             List<int> testValues = new List<int>();
-            foreach (GameObject question in test.transform.gameObject)
+            for (int j = 0; j < test.transform.childCount; j++)
             {
-                testValues.Add(GetDropdownValue(question.gameObject));
+                GameObject question = test.transform.GetChild(j).gameObject;
+                int testValue = GetDropdownValue(question);
+                testValues.Add(testValue);
             }
 
-
-            // Save values naar lists
-            // Save lists naar file
+            // TODO: Save lists naar file
         }
-        // Fix list van panels
-        // Get values van elke panel
-        // Save values naar lists
-        // Save lists naar file*/
     }
 
-    void GetDropdownValue(GameObject dropdown)
+    int GetDropdownValue(GameObject dropdown)
     {
-        /*/ Get value from 'Dropdown - TextMeshPro' attached to dropdown gameobject
-        int value = dropdown.GetComponent("Dropdown - TextMeshPro").value;
+        int value = dropdown.GetComponent<TMPro.TMP_Dropdown>().value;
         print("Dropdown value: " + value);
-        return value;*/
+        return value;
     }
 
     void QuitGame()
