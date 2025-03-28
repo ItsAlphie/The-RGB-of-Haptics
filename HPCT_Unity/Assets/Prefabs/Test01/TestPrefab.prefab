@@ -99,7 +99,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3801956749158781106, guid: 1b852a42a054cb04b97ce2b12a86494e, type: 3}
       propertyPath: m_Name
-      value: Survey Panel
+      value: Survey Panel 1A
       objectReference: {fileID: 0}
     - target: {fileID: 4578070828070095368, guid: 1b852a42a054cb04b97ce2b12a86494e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -205,7 +205,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5177811336733433789, guid: 4225381f951dd184aa25548d0d9aec21, type: 3}
       propertyPath: m_Name
-      value: Test Plate
+      value: Test 1A Plate
       objectReference: {fileID: 0}
     - target: {fileID: 5517075941925111047, guid: 4225381f951dd184aa25548d0d9aec21, type: 3}
       propertyPath: m_LocalPosition.x
