@@ -132,12 +132,12 @@ public class TouchProcessor : MonoBehaviour
                 depth = - depth;
             }
 
-            if (hapticInfo.Hardness == 0) // Hard
+            if (hapticInfo.Hardness == 1) // Hard
             {
                 
                 servoAngle = hardnessSettings_0[0];
             }
-            else if (hapticInfo.Hardness == 1) // Medium
+            else if (hapticInfo.Hardness == 0.5) // Medium
             {
                 
                 if (depth < 0.33f)
@@ -154,7 +154,7 @@ public class TouchProcessor : MonoBehaviour
                 }
 
             }
-            else if (hapticInfo.Hardness == 2) // Soft 
+            else if (hapticInfo.Hardness == 0) // Soft 
             {
                 
                 if (depth < 0.25f)
@@ -175,11 +175,11 @@ public class TouchProcessor : MonoBehaviour
                 }
             }
 
-            Debug.Log("New Servo Angle: " + servoAngle);
+            Debug.Log("New Servo Angle: " + (180-servoAngle));
             CommunicationController.Instance.SendMsg("2," + 
                 roughnessFrequency.ToString() + "," + 
                 bumpsFrequency.ToString() + "," + 
-                servoAngle.ToString());
+                (180-servoAngle).ToString());
         }
     }
 
