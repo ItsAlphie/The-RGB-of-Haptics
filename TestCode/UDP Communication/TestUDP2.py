@@ -1,6 +1,6 @@
 import socket
 
-UDP_IP = "192.168.24.196"
+UDP_IP = "192.168.11.196"
 UDP_PORT = 11000
 MESSAGE = """2,1,0,180"""
 
