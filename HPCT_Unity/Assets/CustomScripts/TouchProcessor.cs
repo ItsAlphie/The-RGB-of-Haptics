@@ -8,9 +8,9 @@ public class TouchProcessor : MonoBehaviour
     private Vector3 previousPosition;
     private Vector3 velocity;
     private Queue<float> velocitySamples = new Queue<float>();
-    private const int sampleSize = 35;
+    private const int sampleSize = 15;
     private int counter = 0;
-    private float maxVelocity = 1f;
+    private float maxVelocity = 0.8f;
 
     void Start()
     {
@@ -50,10 +50,16 @@ public class TouchProcessor : MonoBehaviour
                 "Temperature " + temperature + ", " +
                 "Roughness " + roughness + ", " +
                 "BumpsSize " + bumpSize);
-            CommunicationController.Instance.SendMsg("1," + 
-                temperature.ToString() + "," + 
-                roughness.ToString() + "," + 
-                bumpSize.ToString());
+
+            int repeat = 2;
+            while (repeat > 0)
+            {
+                CommunicationController.Instance.SendMsg("1," +
+                    temperature.ToString() + "," +
+                    roughness.ToString() + "," +
+                    bumpSize.ToString());
+                repeat -= 1;
+            }
         }
     }
 
@@ -139,9 +145,12 @@ public class TouchProcessor : MonoBehaviour
         HapticInfo hapticInfo = other.gameObject.GetComponent<HapticInfo>();
         if (hapticInfo != null)
         {
-            CommunicationController.Instance.SendMsg("0,0,0,0");
-            CommunicationController.Instance.SendMsg("0,0,0,0");
-            CommunicationController.Instance.SendMsg("0,0,0,0");
+            int repeat = 3;
+            while (repeat > 0)
+            {
+                CommunicationController.Instance.SendMsg("0,0,0,0");
+                repeat -= 1;
+            }
         }
     }
 
