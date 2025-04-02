@@ -89,18 +89,18 @@ public class TouchProcessor : MonoBehaviour
             int roughnessFrequency = 0;
             if (averageVelocity >= maxVelocity * 4/3)
             {
-                bumpsFrequency = (int)(hapticInfo.BumpDensity) * 9;
-                roughnessFrequency = (int)(hapticInfo.RoughnessDensity) * 150;
+                bumpsFrequency = (int)(hapticInfo.BumpDensity * 20);
+                roughnessFrequency = (int)(hapticInfo.RoughnessDensity * 150);
             }
             else if (averageVelocity > (maxVelocity) * 0.55)
             {
-                bumpsFrequency = (int)(hapticInfo.BumpDensity) * 6;
-                roughnessFrequency = (int)(hapticInfo.RoughnessDensity) * 100;
+                bumpsFrequency = (int)(hapticInfo.BumpDensity * 15);
+                roughnessFrequency = (int)(hapticInfo.RoughnessDensity * 100);
             }
             else if (averageVelocity > (maxVelocity) * 0.15)
             {
-                bumpsFrequency = (int)(hapticInfo.BumpDensity) * 3;
-                roughnessFrequency = (int)(hapticInfo.RoughnessDensity) * 50;
+                bumpsFrequency = (int)(hapticInfo.BumpDensity * 10);
+                roughnessFrequency = (int)(hapticInfo.RoughnessDensity * 50);
             }
             else
             {
@@ -205,6 +205,7 @@ public class TouchProcessor : MonoBehaviour
         {
             sum += sample;
         }
+        print("sum");
         return sum;
     }
 }
