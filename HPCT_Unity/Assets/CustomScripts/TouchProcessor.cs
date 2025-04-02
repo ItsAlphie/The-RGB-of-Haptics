@@ -12,6 +12,12 @@ public class TouchProcessor : MonoBehaviour
     private int counter = 0;
     private float maxVelocity = 1f;
 
+    [SerializeField] int[] hardnessSettings_0 = {180};  // Hard
+    [SerializeField] int[] hardnessSettings_1 = {20, 90, 180};  // Medium
+    [SerializeField] int[] hardnessSettings_2 = {20, 60, 120, 180};  // Soft
+
+
+
     void Start()
     {
         previousPosition = transform.position;
@@ -113,17 +119,54 @@ public class TouchProcessor : MonoBehaviour
                 other.ClosestPoint(transform.position));
             float depth = 1 - (10000 * (colliderDistance)) / 237;
             float maxDepth = 1.001f - hapticInfo.Hardness;
-
+            int servoAngle = 0;
+            
             if (depth < 0)
             {
                 depth = - depth;
             }
-            int servoAngle = (int)(180 * (depth / maxDepth));
-            if (servoAngle > 180){
-                servoAngle = 180;
+
+            if (hapticInfo.Hardness == 0) // Hard
+            {
+                
+                servoAngle = hardnessSettings_0[0];
             }
-            else if (servoAngle < 0){
-                servoAngle = 0;
+            else if (hapticInfo.Hardness == 1) // Medium
+            {
+                
+                if (depth < 0.33f)
+                {
+                    servoAngle = hardnessSettings_1[0]; 
+                }
+                else if (depth < 0.66f)
+                {
+                    servoAngle = hardnessSettings_1[1]; 
+                }
+                else
+                {
+                    servoAngle =  hardnessSettings_1[2]; 
+                }
+
+            }
+            else if (hapticInfo.Hardness == 2) // Soft 
+            {
+                
+                if (depth < 0.25f)
+                {
+                    servoAngle = hardnessSettings_2[0];
+                }
+                else if (depth < 0.5f)
+                {
+                    servoAngle = hardnessSettings_2[1];
+                }
+                else if (depth < 0.75f)
+                {
+                    servoAngle = hardnessSettings_2[2];
+                }
+                else
+                {
+                    servoAngle = hardnessSettings_2[3]; 
+                }
             }
 
             Debug.Log("New Servo Angle: " + servoAngle);
