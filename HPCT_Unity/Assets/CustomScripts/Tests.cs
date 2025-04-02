@@ -15,7 +15,15 @@ public class Tests : MonoBehaviour
         new Vector3(-3.167f, -0.05f, -0.019f),
         new Vector3(2.982f, -0.053f, 4.466f),  
         new Vector3(2.982f, -0.053f, 2.888f), 
-        new Vector3(2.982f, -0.053f, 5.862f)
+        new Vector3(2.982f, -0.053f, 5.862f),
+        new Vector3(14.6739998,-0.0570001602,-6.14400005),
+        new Vector3(13.1890001,-0.0570001602,-6.14400005),
+        new Vector3(11.6269999,-0.0570001602,-6.14400005),
+        new Vector3(-5.92000008,-0.0570001602,-3.82599998),
+        new Vector3(-4.4380002,-0.0570001602,-3.82599998),
+        new Vector3(-2.99499989,-0.0570001602,-3.82599998),
+        new Vector3(-1.47800004,-0.0570001602,-3.82599998),
+        new Vector3(9.27000046,-0.0570001602,0.495999992)
     };
      [SerializeField] Quaternion[] spawnRotations = new Quaternion[]
     {
@@ -24,7 +32,15 @@ public class Tests : MonoBehaviour
         Quaternion.Euler(0.0f, 0.0f, 0.0f),
         Quaternion.Euler(0.0f, 90.0f, 0.0f),
         Quaternion.Euler(0.0f, 90.0f, 0.0f),
-        Quaternion.Euler(0.0f, 90.0f, 0.0f)
+        Quaternion.Euler(0.0f, 90.0f, 0.0f),
+        Quaternion.Euler(0.0f, 180.0f, 0.0f),
+        Quaternion.Euler(0.0f, 180.0f, 0.0f),
+        Quaternion.Euler(0.0f, 180.0f, 0.0f),
+        Quaternion.Euler(0.0f, 0.0f, 0.0f),
+        Quaternion.Euler(0.0f, 0.0f, 0.0f),
+        Quaternion.Euler(0.0f, 0.0f, 0.0f),
+        Quaternion.Euler(0.0f, 0.0f, 0.0f),
+        Quaternion.Euler(0.0f, 90.0f, 0.0f),
     };
     
     // Start is called before the first frame update
