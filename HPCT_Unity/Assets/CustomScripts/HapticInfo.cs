@@ -34,7 +34,7 @@ public class DropdownEditor : Editor
                 script.RoughnessDensity = 0f;
                 script.BumpSize = 0f;
                 script.BumpDensity = 0f;
-                script.Hardness = 0f;
+                script.Hardness = 0;
                 script.Temperature = 0f;
                 break;
             case 1:
@@ -43,7 +43,7 @@ public class DropdownEditor : Editor
                 script.RoughnessDensity = 0.80f;
                 script.BumpSize = 0.5f;
                 script.BumpDensity = 0.20f;
-                script.Hardness = 0.9f;
+                script.Hardness = 1;
                 script.Temperature = 0.1f;
                 break;
             case 2:
@@ -52,7 +52,7 @@ public class DropdownEditor : Editor
                 script.RoughnessDensity = 0.80f;
                 script.BumpSize = 0f;
                 script.BumpDensity = 0f;
-                script.Hardness = 1f;
+                script.Hardness = 1;
                 script.Temperature = -0.7f;
                 break;
         }
@@ -70,7 +70,7 @@ public class HapticInfo : MonoBehaviour
     [Range(0.0f, 1.0f)] public float RoughnessDensity = 0f;
     [Range(0.0f, 1.0f)] public float BumpSize = 0f;
     [Range(0.0f, 1.0f)] public float BumpDensity = 0f;
-    [Range(0.0f, 1.0f)] public float Hardness = 0f;
+    [Range(0, 2)] public int Hardness = 0;
     [Range(-1.0f, 1.0f)] public float Temperature = 0f;
 
     public Boolean sendData = false;
