@@ -86,12 +86,17 @@ public class HapticInfo : MonoBehaviour
                 (Roughness * 255).ToString() + "," +
                 (BumpSize * 255).ToString());
             sendData = false;
+            CommunicationController.Instance.SendMsg("2," +
+                "0," +
+                "0" +
+                "130");
+            activate = false;
         }
         if (activate){
             CommunicationController.Instance.SendMsg("2," +
-                "5," +
-                "5," +
-                "270");
+                "100," +
+                "6," +
+                "130");
             activate = false;
         }
         if (deactivate){
