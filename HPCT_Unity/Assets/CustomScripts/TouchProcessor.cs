@@ -10,7 +10,7 @@ public class TouchProcessor : MonoBehaviour
     private Queue<float> velocitySamples = new Queue<float>();
     private const int sampleSize = 15;
     private int counter = 0;
-    private float maxVelocity = 0.8f;
+    private float maxVelocity = 1.2f;
 
     [SerializeField] int[] hardnessSettings_0 = {180};  // Hard
     [SerializeField] int[] hardnessSettings_1 = {20, 90, 180};  // Medium
@@ -87,17 +87,17 @@ public class TouchProcessor : MonoBehaviour
             float averageVelocity = CalculateAverageVelocity();
             int bumpsFrequency = 0;
             int roughnessFrequency = 0;
-            if (averageVelocity >= maxVelocity)
+            if (averageVelocity >= maxVelocity * 4/3)
             {
                 bumpsFrequency = (int)(hapticInfo.BumpDensity) * 9;
                 roughnessFrequency = (int)(hapticInfo.RoughnessDensity) * 150;
             }
-            else if (averageVelocity > (maxVelocity) * 2 / 3)
+            else if (averageVelocity > (maxVelocity) * 0.55)
             {
                 bumpsFrequency = (int)(hapticInfo.BumpDensity) * 6;
                 roughnessFrequency = (int)(hapticInfo.RoughnessDensity) * 100;
             }
-            else if (averageVelocity > (maxVelocity) * 2 / 3)
+            else if (averageVelocity > (maxVelocity) * 0.15)
             {
                 bumpsFrequency = (int)(hapticInfo.BumpDensity) * 3;
                 roughnessFrequency = (int)(hapticInfo.RoughnessDensity) * 50;
@@ -194,6 +194,7 @@ public class TouchProcessor : MonoBehaviour
                 CommunicationController.Instance.SendMsg("0,0,0,0");
                 repeat -= 1;
             }
+            velocitySamples.Clear();
         }
     }
 
@@ -204,6 +205,6 @@ public class TouchProcessor : MonoBehaviour
         {
             sum += sample;
         }
-        return sum / velocitySamples.Count;
+        return sum;
     }
 }
