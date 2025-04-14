@@ -16,7 +16,7 @@ public class CommunicationController : MonoBehaviour
     private const int sendPort = 11000;
     private UdpClient listener;
     private IPEndPoint groupEP;
-    private IPAddress espIP = IPAddress.Parse("192.168.11.196");
+    private IPAddress espIP = IPAddress.Parse("192.168.205.196");
 
     public ConcurrentQueue<float> fingerData = new ConcurrentQueue<float>();
 
