@@ -12,12 +12,12 @@
 // #define ssid "Redmi"         // Replace with your WiFi SSID
 // #define password "galagala"           // Replace with your WiFi password
 
-#define ssid "Redmi"         // Replace with your WiFi SSID
-#define password "galagala"           // Replace with your WiFi password
+#define ssid "Hotspot"         // Replace with your WiFi SSID
+#define password "eeeeeeee"           // Replace with your WiFi password
 
 // Server settings
-#define serverIP "192.168.24.91"      // Unity server's IP address  
-#define serverPort 11069             // Unity server's port
+#define serverIP "192.168.11.91"      // Unity server's IP address  
+#define serverPort 11000             // Unity server's port
 
 
 WiFiUDP udp;
@@ -39,6 +39,7 @@ PeltierController peltierController(4,6,1,1);
 
 // Flex sensor
 int flexPin = 2;
+bool flexEnabled = false;
 
 // -----------------------------------------------------------------
 TaskHandle_t TemperatureAndFlexControlTask;
@@ -72,8 +73,8 @@ void sendMessage(float message){
 void sendFlexValue(){
   float flexValue= analogRead(flexPin) * (3.3f / 4095.0f);;
   sendMessage(flexValue);
-  // Serial.print("Flex Value is: ");
-  // Serial.println(flexValue);
+  Serial.print("Flex Value is: ");
+  Serial.println(flexValue);
 }
 
 void temperatureAndFlexControl(void * pvParameters){
@@ -81,7 +82,9 @@ void temperatureAndFlexControl(void * pvParameters){
       if(peltierController.isEnabled()){
         peltierController.temperatureControl();
       }
-  // sendFlexValue();
+  // if(flexEnabled){
+  //     sendFlexValue();
+  // }
   vTaskDelay(1000);
   }
 }
@@ -173,7 +176,7 @@ void loop() {
 
   * Set: 1,%d,%d,%d
     - desired temperature [20-40]
-    - Titan haptic motor 1: set strength [0-255]
+    - Titan haptic motor 1: set strength [0-255] (impact)
     - Titan haptic motor 2: set strength [0-255]
 
   * Continuous: 2,%d,%d,$d
@@ -182,19 +185,21 @@ void loop() {
     - Servo angle [0-180] 
 */
 
-
+  
 
   if(sscanf(receiveMessage(), "%d,%d,%d,%d",&command, &parameter_0, &parameter_1, &parameter_2) ==4){
     switch(command){
       case 0:
-        peltierController.setDesiredTemp(25);
+        peltierController.setDesiredTemp(33);
         vibration.disable(0);
         vibration.disable(1);
-        servoMotor.write(0);
+        servoMotor.write(90);
+        // flexEnabled = false;
 
         break;
 
       case 1:
+        // flexEnabled = true;
         peltierController.enable();
         peltierController.setDesiredTemp(parameter_0);
 
@@ -205,6 +210,13 @@ void loop() {
       
       case 2:
 
+        if(parameter_0 > 0 && parameter_0 < 3){
+          parameter_0 = 0;
+        }
+
+        if(parameter_1 > 0 && parameter_1 < 3){
+          parameter_1 = 0;
+        }
         vibration.setFrequency(0, parameter_0);
         vibration.setFrequency(1, parameter_1);
         servoMotor.write(parameter_2);

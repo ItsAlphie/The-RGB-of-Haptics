@@ -10,8 +10,8 @@
 #define TCAADDR 0x70
 #define I2C_SDA 12
 #define I2C_SCL 11
-#define PIN1 46
-#define PIN2 3
+#define PIN1 46 //impact
+#define PIN2 3 //lf
 
 // ------ PWM ------
 

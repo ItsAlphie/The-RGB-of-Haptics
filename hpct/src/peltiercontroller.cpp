@@ -19,13 +19,13 @@ void PeltierController::temperatureControl()
     readThermistor();
     calculateError();
     // int output = error * Kp; no pid control for now
-    if (error > 2)
+    if (error > 1)
     { 
         Serial.println("Temperature too low. Heating up.");
         digitalWrite(peltierDriverPin1, HIGH);
         digitalWrite(peltierDriverPin2, LOW);
     }
-    else if (error < -2)
+    else if (error < -1)
     {
         Serial.println("Temperature too high. Cooling down.");
         digitalWrite(peltierDriverPin1, LOW);
@@ -36,7 +36,7 @@ void PeltierController::temperatureControl()
         Serial.println("Within desired temperature range.");
         digitalWrite(peltierDriverPin1, LOW);
         digitalWrite(peltierDriverPin2, LOW);
-        if(desiredTemp == 25){
+        if(desiredTemp == 33){
             disable();
         }
     }
@@ -45,7 +45,7 @@ void PeltierController::temperatureControl()
 
 void PeltierController::readThermistor()
 {
-    float voltage = analogRead(thermistorPin) * (3.3f / 4095.0f) + 0.1; //0.1 offset 
+    float voltage = analogRead(thermistorPin) * (3.3f / 4095.0f); 
     Serial.print("Current voltage read: ");
     Serial.println(voltage);
 
@@ -75,8 +75,8 @@ float PeltierController::interpolate(float resistanceValue)
 void PeltierController::calculateError()
 {
     error = desiredTemp - currentTemp;
-    // Serial.print("Error is: ");
-    // Serial.println(error);
+    Serial.print("Error is: ");
+    Serial.println(error);
 }
 
 void PeltierController::enable()
