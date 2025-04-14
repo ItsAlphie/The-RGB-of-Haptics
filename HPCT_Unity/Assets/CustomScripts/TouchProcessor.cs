@@ -8,15 +8,19 @@ public class TouchProcessor : MonoBehaviour
     private Vector3 previousPosition;
     private Vector3 velocity;
     private Queue<float> velocitySamples = new Queue<float>();
-    private const int sampleSize = 15;
+    private const int sampleSize = 5;
     private int counter = 0;
-    private float maxVelocity = 1.2f;
+    private float maxVelocity = 1.5f;
 
-    [SerializeField] int[] hardnessSettings_0 = {180};  // Hard
-    [SerializeField] int[] hardnessSettings_1 = {20, 90, 180};  // Medium
-    [SerializeField] int[] hardnessSettings_2 = {20, 60, 120, 180};  // Soft
+    int[] hardnessSettings_0 = {180};  // Hard
+    int[] hardnessSettings_1 = {108, 131, 180};  // Medium
+    int[] hardnessSettings_2 = {105, 120, 138, 180};  // Soft
 
-
+    int maxBumps = 20;
+    int maxRoughness = 150;
+    int prevRoughness = 0;
+    int prevBumps = 0; 
+    int prevServo = 0;
 
     void Start()
     {
@@ -83,24 +87,27 @@ public class TouchProcessor : MonoBehaviour
                 break;
             }
             counter = 0;
-            // Linearly scaling the frequency of bumps and roughness based on the finger's velocity
+
+            // Both the bump and roughness frequencies are calculated
+            // based on the finger's velocity range and the haptic information (1/3, 2/3 or 3/3)
+            // This scales roughness from 25-50, 50-100, 75-150
             float averageVelocity = CalculateAverageVelocity();
             int bumpsFrequency = 0;
             int roughnessFrequency = 0;
-            if (averageVelocity >= maxVelocity * 4/3)
+            if (averageVelocity >= (maxVelocity * 1))
             {
-                bumpsFrequency = (int)(hapticInfo.BumpDensity * 20);
-                roughnessFrequency = (int)(hapticInfo.RoughnessDensity * 150);
+                bumpsFrequency = (int)(hapticInfo.BumpDensity * maxBumps * 1);
+                roughnessFrequency = (int)(hapticInfo.RoughnessDensity * maxRoughness * 1);
             }
-            else if (averageVelocity > (maxVelocity) * 0.55)
+            else if (averageVelocity > (maxVelocity * 0.62))
             {
-                bumpsFrequency = (int)(hapticInfo.BumpDensity * 15);
-                roughnessFrequency = (int)(hapticInfo.RoughnessDensity * 100);
+                bumpsFrequency = (int)(hapticInfo.BumpDensity * maxBumps * 0.75);
+                roughnessFrequency = (int)(hapticInfo.RoughnessDensity * maxRoughness * 0.75);
             }
-            else if (averageVelocity > (maxVelocity) * 0.15)
+            else if (averageVelocity > (maxVelocity * 0.23))
             {
-                bumpsFrequency = (int)(hapticInfo.BumpDensity * 10);
-                roughnessFrequency = (int)(hapticInfo.RoughnessDensity * 50);
+                bumpsFrequency = (int)(hapticInfo.BumpDensity * maxBumps * 0.5);
+                roughnessFrequency = (int)(hapticInfo.RoughnessDensity * maxRoughness * 0.5);
             }
             else
             {
@@ -174,12 +181,22 @@ public class TouchProcessor : MonoBehaviour
                     servoAngle = hardnessSettings_2[3]; 
                 }
             }
+            if ((servoAngle != prevServo) || (roughnessFrequency != prevRoughness) || (bumpsFrequency != prevBumps))
+            {
+                prevServo = servoAngle;
+                prevBumps = bumpsFrequency;
+                prevRoughness = roughnessFrequency;
+                print("Updated values: 2," +
+                    roughnessFrequency.ToString() + "," +
+                    bumpsFrequency.ToString() + "," +
+                    (180 - servoAngle).ToString());
+                print("Speed = " + averageVelocity);
 
-            Debug.Log("New Servo Angle: " + (180-servoAngle));
-            CommunicationController.Instance.SendMsg("2," + 
-                roughnessFrequency.ToString() + "," + 
-                bumpsFrequency.ToString() + "," + 
-                (180-servoAngle).ToString());
+                CommunicationController.Instance.SendMsg("2," +
+                roughnessFrequency.ToString() + "," +
+                bumpsFrequency.ToString() + "," +
+                (180 - servoAngle).ToString());
+            }
         }
     }
 
@@ -205,7 +222,6 @@ public class TouchProcessor : MonoBehaviour
         {
             sum += sample;
         }
-        print("sum");
         return sum;
     }
 }
