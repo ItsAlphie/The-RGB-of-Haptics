@@ -5,6 +5,47 @@ using UnityEditor;
 using System;
 using System.Diagnostics;
 
+[CustomPropertyDrawer(typeof(SnappedRangeAttribute))]
+public class SnappedRangeDrawer : PropertyDrawer
+{
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    {
+        if (property.propertyType == SerializedPropertyType.Float)
+        {
+            SnappedRangeAttribute range = (SnappedRangeAttribute)attribute;
+
+            EditorGUI.BeginProperty(position, label, property);
+
+            // Draw the slider
+            float value = EditorGUI.Slider(position, label, property.floatValue, range.Min, range.Max);
+
+            // Snap to nearest step based on resolution
+            float step = (range.Max - range.Min) / range.Resolution;
+            property.floatValue = Mathf.Round(value / step) * step;
+
+            EditorGUI.EndProperty();
+        }
+        else
+        {
+            EditorGUI.LabelField(position, label.text, "Not a float value.");
+        }
+    }
+}
+
+public class SnappedRangeAttribute : PropertyAttribute
+{
+    public float Min { get; }
+    public float Max { get; }
+    public int Resolution { get; }
+
+    public SnappedRangeAttribute(float min, float max, int resolution)
+    {
+        Min = min;
+        Max = max;
+        Resolution = resolution;
+    }
+}
+
 [CustomEditor(typeof(HapticInfo))]
 public class DropdownEditor : Editor
 {
@@ -66,12 +107,12 @@ public class HapticInfo : MonoBehaviour
     [HideInInspector]
     public string[] Presets = new string[] { "Custom", "Wood", "Steel" };
 
-    [Range(0.0f, 1.0f)] public float Roughness = 0f;
-    [Range(0.0f, 1.0f)] public float RoughnessDensity = 0f;
-    [Range(0.0f, 1.0f)] public float BumpSize = 0f;
-    [Range(0.0f, 1.0f)] public float BumpDensity = 0f;
-    [Range(0, 2)] public int Hardness = 0;
-    [Range(-1.0f, 1.0f)] public float Temperature = 0f;
+    [SnappedRange(0.0f, 1.0f, 2)] public float Roughness = 0f;
+    [SnappedRange(0.0f, 1.0f, 2)] public float RoughnessDensity = 0f;
+    [SnappedRange(0.0f, 1.0f, 2)] public float BumpSize = 0f;
+    [SnappedRange(0.0f, 1.0f, 2)] public float BumpDensity = 0f;
+    [SnappedRange(0.0f, 1.0f, 2)] public float Hardness = 0;
+    [SnappedRange(-1.0f, 1.0f, 4)] public float Temperature = 0f;
 
     public Boolean sendData = false;
     public Boolean activate = false;
