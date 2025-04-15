@@ -12,11 +12,11 @@ using System.Linq.Expressions;
 
 public class CommunicationController : MonoBehaviour
 {
-    private const int listenPort = 11069;
+    private const int listenPort = 11000;
     private const int sendPort = 11000;
     private UdpClient listener;
     private IPEndPoint groupEP;
-    private IPAddress espIP = IPAddress.Parse("192.168.196.196");
+    private IPAddress espIP = IPAddress.Parse("192.168.205.196");
 
     public ConcurrentQueue<float> fingerData = new ConcurrentQueue<float>();
 
@@ -110,7 +110,6 @@ public class CommunicationController : MonoBehaviour
     public void ProcessMsg(byte[] bytes)
     {
         string message = System.Text.Encoding.UTF8.GetString(bytes);
-        Debug.Log("Received message: " + message);
         float flexvalue = float.Parse(message);
         fingerData.Enqueue(flexvalue);
     }
