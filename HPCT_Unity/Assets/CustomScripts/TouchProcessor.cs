@@ -16,7 +16,7 @@ public class TouchProcessor : MonoBehaviour
     private bool entered = false;
 
     // Solidity settings
-    int[] hardnessSettings_0 = {180};  // Hard
+    int[] hardnessSettings_0 = {150};  // Hard
     int[] hardnessSettings_1 = {108, 131, 180};  // Medium
     int[] hardnessSettings_2 = {105, 120, 138, 180};  // Soft
 
@@ -165,7 +165,7 @@ public class TouchProcessor : MonoBehaviour
                 depth = - depth;
             }
 
-            if (hapticInfo.Hardness == 1) // Hard
+            if ((hapticInfo.Hardness == 1) && (depth > 0.35f)) // Hard
             {
                 
                 servoAngle = hardnessSettings_0[0];
@@ -190,15 +190,15 @@ public class TouchProcessor : MonoBehaviour
             else if (hapticInfo.Hardness == 0) // Soft 
             {
                 
-                if (depth < 0.25f)
+                if (depth < 0.40f)
                 {
                     servoAngle = hardnessSettings_2[0];
                 }
-                else if (depth < 0.5f)
+                else if (depth < 0.60f)
                 {
                     servoAngle = hardnessSettings_2[1];
                 }
-                else if (depth < 0.75f)
+                else if (depth < 0.80f)
                 {
                     servoAngle = hardnessSettings_2[2];
                 }
@@ -231,7 +231,7 @@ public class TouchProcessor : MonoBehaviour
         HapticInfo hapticInfo = other.gameObject.GetComponent<HapticInfo>();
         if (hapticInfo != null)
         {
-            CommunicationController.Instance.SendMsg("2,0,0,90");
+            CommunicationController.Instance.SendMsg("2,0,0,45");
             int repeat = 3;
             while (repeat > 0)
             {
