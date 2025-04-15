@@ -37,7 +37,6 @@ void Vibration::enable(int motor)
   enabled[motor] = true;
   SelectMPX(mpx[motor]);
   HMD.Mode(0x03);
-  drive(motor);
 }
 
 void Vibration::drive(int motor) // possibly leave out enabled
@@ -73,10 +72,6 @@ void Vibration::setStrength(int motor, int strength)
 
   if(strength == 0){
     disable(motor);
-  }
-  else{
-    enable(motor);
-    drive(motor);
   }
 }
 

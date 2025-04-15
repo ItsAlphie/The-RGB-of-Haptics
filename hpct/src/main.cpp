@@ -190,7 +190,7 @@ void loop() {
   if(sscanf(receiveMessage(), "%d,%d,%d,%d",&command, &parameter_0, &parameter_1, &parameter_2) ==4){
     switch(command){
       case 0:
-        peltierController.setDesiredTemp(33);
+        peltierController.setDesiredTemp(25);
         vibration.disable(0);
         vibration.disable(1);
         servoMotor.write(90);
@@ -205,7 +205,7 @@ void loop() {
 
         vibration.setStrength(0, parameter_1);
         vibration.setStrength(1, parameter_2);
-
+        
         break;
       
       case 2:
