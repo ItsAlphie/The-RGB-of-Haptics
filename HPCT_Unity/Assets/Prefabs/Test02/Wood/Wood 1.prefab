@@ -118,16 +118,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80c2ed436779ed642a71bee65a21e7f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrayIdx: 0
+  arrayIdx: 1
   Presets:
   - Custom
   - Wood
   - Steel
-  Roughness: 0
-  RoughnessDensity: 0
-  BumpSize: 0
+  Roughness: 0.5
+  RoughnessDensity: 1
+  BumpSize: 0.5
   BumpDensity: 0
-  Hardness: 0
+  Hardness: 1
   Temperature: 0
   sendData: 0
   activate: 0

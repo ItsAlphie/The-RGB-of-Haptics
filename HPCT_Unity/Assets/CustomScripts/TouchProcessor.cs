@@ -17,8 +17,8 @@ public class TouchProcessor : MonoBehaviour
 
     // Solidity settings
     int[] hardnessSettings_0 = {150};  // Hard
-    int[] hardnessSettings_1 = {108, 131, 180};  // Medium
-    int[] hardnessSettings_2 = {105, 120, 138, 180};  // Soft
+    int[] hardnessSettings_1 = {105, 120, 138, 180 };  // Soft
+    int[] hardnessSettings_2 = {100};  // No force/light tension
 
     // Vibration settings
     int maxBumps = 20;
@@ -30,7 +30,7 @@ public class TouchProcessor : MonoBehaviour
     // Temperature variables
     int heatScale = 12;
     int freezeScale = 8;
-    int roomTemp = 25;
+    int roomTemp = 24;
 
     void Start()
     {
@@ -166,11 +166,10 @@ public class TouchProcessor : MonoBehaviour
             }
 
             if ((hapticInfo.Hardness == 1) && (depth > 0.35f)) // Hard
-            {
-                
+            { 
                 servoAngle = hardnessSettings_0[0];
             }
-            else if (hapticInfo.Hardness == 0.5) // Medium
+            else if (hapticInfo.Hardness == 0.5) // Soft
             {
                 
                 if (depth < 0.33f)
@@ -187,26 +186,11 @@ public class TouchProcessor : MonoBehaviour
                 }
 
             }
-            else if (hapticInfo.Hardness == 0) // Soft 
+            else if ((hapticInfo.Hardness == 0) && (depth > 0.35f)) // No force/light tension
             {
-                
-                if (depth < 0.40f)
-                {
-                    servoAngle = hardnessSettings_2[0];
-                }
-                else if (depth < 0.60f)
-                {
-                    servoAngle = hardnessSettings_2[1];
-                }
-                else if (depth < 0.80f)
-                {
-                    servoAngle = hardnessSettings_2[2];
-                }
-                else
-                {
-                    servoAngle = hardnessSettings_2[3]; 
-                }
+                servoAngle = hardnessSettings_2[0];
             }
+
             if ((servoAngle != prevServo) || (roughnessFrequency != prevRoughness) || (bumpsFrequency != prevBumps))
             {
                 prevServo = servoAngle;
@@ -231,7 +215,6 @@ public class TouchProcessor : MonoBehaviour
         HapticInfo hapticInfo = other.gameObject.GetComponent<HapticInfo>();
         if (hapticInfo != null)
         {
-            CommunicationController.Instance.SendMsg("2,0,0,45");
             int repeat = 3;
             while (repeat > 0)
             {
