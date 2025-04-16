@@ -96,6 +96,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1858234738785469245, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2534703919187465236, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
       propertyPath: m_Name
       value: LF MaxFreq MidAmp Plate
@@ -120,8 +124,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5874449976553415083, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5975590138830302261, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5987838881257812488, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6082584781570997397, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
