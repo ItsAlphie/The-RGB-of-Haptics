@@ -48,13 +48,13 @@ public class SaveData : MonoBehaviour
         List<string> testNames = new List<string>
         {
             "Test1A_1(Clone)",
-            "Test1A_3(Clone)",
+            "Test1A_2(Clone)",
             "Test1B_1(Clone)",
-            "Test1B_3(Clone)",
+            "Test1B_2(Clone)",
+            "Test1C_1(Clone)",
             "Test1C_2(Clone)",
-            "Test1C_4(Clone)",
-            "Test1D(Clone)",
-            "Test1E(Clone)"
+            "Test1D_1(Clone)",
+            "Test1D_2(Clone)"
         };
 
         foreach (string testName in testNames)
@@ -87,9 +87,13 @@ public class SaveData : MonoBehaviour
     {
         List<string> testNames = new List<string>
         {
-            "Water Bowl Test",
-            "Metal Test",
-            "Wood Test"
+            "Water Bowl Test 1",
+            "Water Bowl Test 2",
+            "Metal Test 1",
+            "Metal Test 2",
+            "Wood Test 1",
+            "Wood Test 2",
+            "Wood Test 3"
         };
 
         foreach (string testName in testNames)

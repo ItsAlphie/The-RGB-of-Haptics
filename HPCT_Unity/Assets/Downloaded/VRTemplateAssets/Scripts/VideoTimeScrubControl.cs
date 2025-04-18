@@ -52,8 +52,8 @@ namespace Unity.VRTemplate
             m_VideoPlayer = GetComponent<VideoPlayer>();
             if (!m_VideoPlayer.playOnAwake)
             {
-                m_VideoPlayer.playOnAwake = true; // Set play on awake for next enable.
-                m_VideoPlayer.Play(); // Play video to load first frame.
+                //m_VideoPlayer.playOnAwake = true; // Set play on awake for next enable.
+                //m_VideoPlayer.Play(); // Play video to load first frame.
                 VideoStop(); // Stop the video to set correct state and pause frame.
             }
             else

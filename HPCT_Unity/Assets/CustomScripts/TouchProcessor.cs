@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class TouchProcessor : MonoBehaviour
@@ -11,16 +13,24 @@ public class TouchProcessor : MonoBehaviour
     private const int sampleSize = 5;
     private int counter = 0;
     private float maxVelocity = 1.5f;
+    private bool entered = false;
 
-    int[] hardnessSettings_0 = {180};  // Hard
-    int[] hardnessSettings_1 = {108, 131, 180};  // Medium
-    int[] hardnessSettings_2 = {105, 120, 138, 180};  // Soft
+    // Solidity settings
+    int[] hardnessSettings_0 = {150};  // Hard
+    int[] hardnessSettings_1 = {105, 120, 138, 180 };  // Soft
+    int[] hardnessSettings_2 = {100};  // No force/light tension
 
+    // Vibration settings
     int maxBumps = 20;
     int maxRoughness = 150;
     int prevRoughness = 0;
     int prevBumps = 0; 
     int prevServo = 0;
+
+    // Temperature variables
+    int heatScale = 12;
+    int freezeScale = 8;
+    int roomTemp = 24;
 
     void Start()
     {
@@ -54,14 +64,29 @@ public class TouchProcessor : MonoBehaviour
         {
             int roughness = (int)(hapticInfo.Roughness * 255);
             int bumpSize = (int)(hapticInfo.BumpSize * 255);
-            int temperature = (int)(hapticInfo.Temperature * 10 + 30);
+            int temperature = roomTemp;
 
-            Debug.Log("Haptic Info of " + other.gameObject.name + ": " +
-                "Temperature " + temperature + ", " +
-                "Roughness " + roughness + ", " +
-                "BumpsSize " + bumpSize);
+            if (hapticInfo.Temperature > 0)
+            {
+                temperature = (int)(hapticInfo.Temperature * heatScale + roomTemp);
+            }
+            else if (hapticInfo.Temperature < 0)
+            {
+                temperature = (int)(hapticInfo.Temperature * freezeScale + roomTemp);
+            }
 
-            int repeat = 2;
+                Debug.Log("Haptic Info of " + other.gameObject.name + ": " +
+                    "Temperature " + temperature + ", " +
+                    "Roughness " + roughness + ", " +
+                    "BumpsSize " + bumpSize);
+
+            if (velocitySamples.Count > sampleSize)
+            {
+                velocitySamples.Dequeue();
+                velocitySamples.Enqueue(0);
+            }
+
+            int repeat = 1;
             while (repeat > 0)
             {
                 CommunicationController.Instance.SendMsg("1," +
@@ -70,6 +95,7 @@ public class TouchProcessor : MonoBehaviour
                     bumpSize.ToString());
                 repeat -= 1;
             }
+            entered = true;
         }
     }
 
@@ -79,7 +105,7 @@ public class TouchProcessor : MonoBehaviour
     void OnTriggerStay(Collider other)
     {
         HapticInfo hapticInfo = other.gameObject.GetComponent<HapticInfo>();
-        if (hapticInfo != null)
+        if ((hapticInfo != null) && entered)
         {
             while (counter < sampleSize)
             {
@@ -99,7 +125,7 @@ public class TouchProcessor : MonoBehaviour
                 bumpsFrequency = (int)(hapticInfo.BumpDensity * maxBumps * 1);
                 roughnessFrequency = (int)(hapticInfo.RoughnessDensity * maxRoughness * 1);
             }
-            else if (averageVelocity > (maxVelocity * 0.62))
+            else if (averageVelocity > (maxVelocity * 0.65))
             {
                 bumpsFrequency = (int)(hapticInfo.BumpDensity * maxBumps * 0.75);
                 roughnessFrequency = (int)(hapticInfo.RoughnessDensity * maxRoughness * 0.75);
@@ -139,12 +165,11 @@ public class TouchProcessor : MonoBehaviour
                 depth = - depth;
             }
 
-            if (hapticInfo.Hardness == 1) // Hard
-            {
-                
+            if ((hapticInfo.Hardness == 1) && (depth > 0.35f)) // Hard
+            { 
                 servoAngle = hardnessSettings_0[0];
             }
-            else if (hapticInfo.Hardness == 0.5) // Medium
+            else if (hapticInfo.Hardness == 0.5) // Soft
             {
                 
                 if (depth < 0.33f)
@@ -161,26 +186,11 @@ public class TouchProcessor : MonoBehaviour
                 }
 
             }
-            else if (hapticInfo.Hardness == 0) // Soft 
+            else if ((hapticInfo.Hardness == 0) && (depth > 0.35f)) // No force/light tension
             {
-                
-                if (depth < 0.25f)
-                {
-                    servoAngle = hardnessSettings_2[0];
-                }
-                else if (depth < 0.5f)
-                {
-                    servoAngle = hardnessSettings_2[1];
-                }
-                else if (depth < 0.75f)
-                {
-                    servoAngle = hardnessSettings_2[2];
-                }
-                else
-                {
-                    servoAngle = hardnessSettings_2[3]; 
-                }
+                servoAngle = hardnessSettings_2[0];
             }
+
             if ((servoAngle != prevServo) || (roughnessFrequency != prevRoughness) || (bumpsFrequency != prevBumps))
             {
                 prevServo = servoAngle;
@@ -212,6 +222,10 @@ public class TouchProcessor : MonoBehaviour
                 repeat -= 1;
             }
             velocitySamples.Clear();
+            prevServo = 0;
+            prevBumps = 0;
+            prevRoughness = 0;
+            entered = false;
         }
     }
 
