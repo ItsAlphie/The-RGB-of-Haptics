@@ -80,7 +80,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 379465778754882826, guid: 26219b75d0f9bc74980d01669e6b8f13, type: 3}
       propertyPath: Temperature
-      value: -0.5
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 379465778754882826, guid: 26219b75d0f9bc74980d01669e6b8f13, type: 3}
       propertyPath: RoughnessDensity
@@ -199,7 +199,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3744197708491470881, guid: e29099db07043fa448857cb46fe82793, type: 3}
       propertyPath: Temperature
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -30,7 +30,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 755347459256886771, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
       propertyPath: Temperature
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1430709349376420935, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
       propertyPath: m_AnchorMax.y
