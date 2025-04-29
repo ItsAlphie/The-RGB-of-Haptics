@@ -25,7 +25,7 @@ void PeltierController::temperatureControl()
         digitalWrite(peltierDriverPin1, HIGH);
         digitalWrite(peltierDriverPin2, LOW);
     }
-    else if (error < 3)
+    else if (error < -3)
     {
         Serial.println("Temperature too high. Cooling down.");
         digitalWrite(peltierDriverPin1, LOW);
