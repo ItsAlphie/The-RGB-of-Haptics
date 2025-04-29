@@ -125,7 +125,7 @@ MonoBehaviour:
   - Custom
   - Wood
   - Steel
-  Roughness: 0.276
+  Roughness: 0.5
   RoughnessDensity: 0
   BumpSize: 0
   BumpDensity: 0

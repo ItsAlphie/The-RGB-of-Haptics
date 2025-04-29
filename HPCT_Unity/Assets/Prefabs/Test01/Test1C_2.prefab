@@ -18,7 +18,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 755347459256886771, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
       propertyPath: BumpSize
-      value: 0.1
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 755347459256886771, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
+      propertyPath: Hardness
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 755347459256886771, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
       propertyPath: Roughness
@@ -26,7 +30,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 755347459256886771, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
       propertyPath: BumpDensity
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1430709349376420935, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
       propertyPath: m_AnchorMax.y
@@ -96,6 +100,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1858234738785469245, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534703919187465236, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
+      propertyPath: m_Name
+      value: Impact MaxFreq MaxAmp Plate
+      objectReference: {fileID: 0}
     - target: {fileID: 2866475134658696830, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -116,8 +128,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5874449976553415083, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5975590138830302261, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5987838881257812488, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6082584781570997397, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
@@ -163,6 +183,22 @@ PrefabInstance:
     - target: {fileID: 8078062936336956213, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8990591450277121988, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8990591450277121988, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
+      propertyPath: m_Color.b
+      value: 0.2264151
+      objectReference: {fileID: 0}
+    - target: {fileID: 8990591450277121988, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
+      propertyPath: m_Color.g
+      value: 0.2264151
+      objectReference: {fileID: 0}
+    - target: {fileID: 8990591450277121988, guid: 65d89b30e81adcf4e9e483531ff696c3, type: 3}
+      propertyPath: m_Color.r
+      value: 0.2264151
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
