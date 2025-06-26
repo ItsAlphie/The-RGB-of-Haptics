@@ -16,7 +16,7 @@
 #define password "eeeeeeee"           // Replace with your WiFi password
 
 // Server settings
-#define serverIP "192.168.11.91"      // Unity server's IP address  
+#define serverIP "192.168.245.91"      // Unity server's IP address  
 #define serverPort 11000             // Unity server's port
 
 
@@ -33,7 +33,7 @@ int parameter_2;
 Vibration vibration;
 
 Servo servoMotor;
-int pos = 0;
+// int pos = 0;
 
 PeltierController peltierController(4,6,1,1);
 
@@ -185,8 +185,6 @@ void loop() {
     - Servo angle [0-180] 
 */
 
-  
-
   if(sscanf(receiveMessage(), "%d,%d,%d,%d",&command, &parameter_0, &parameter_1, &parameter_2) ==4){
     switch(command){
       case 0:
@@ -194,12 +192,11 @@ void loop() {
         vibration.disable(0);
         vibration.disable(1);
         servoMotor.write(90);
-        // flexEnabled = false;
 
         break;
 
-      case 1:
-        // flexEnabled = true;
+      case 1: // Initial haptic activation before any user movement. Only sent once.
+        
         peltierController.enable();
         peltierController.setDesiredTemp(parameter_0);
 
@@ -208,21 +205,21 @@ void loop() {
         
         break;
       
-      case 2:
+      case 2: // Adapt haptic parameters to user's movement. Sent continuously.
 
-        if(parameter_0 > 0 && parameter_0 < 3){
-          parameter_0 = 0;
-        }
+        // Set frequency to 0 if within 1-2 Hz range (3 Hz is minimum frequency)
+        if(parameter_0 > 0 && parameter_0 < 3){parameter_0 = 0;}
+        if(parameter_1 > 0 && parameter_1 < 3){parameter_1 = 0;}
 
-        if(parameter_1 > 0 && parameter_1 < 3){
-          parameter_1 = 0;
-        }
         vibration.setFrequency(0, parameter_0);
         vibration.setFrequency(1, parameter_1);
         servoMotor.write(parameter_2);
 
         break;
 
+      default:
+        Serial.println("Incorrect input");
+        break;
     }
   }
 
