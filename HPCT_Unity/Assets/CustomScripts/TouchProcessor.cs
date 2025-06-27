@@ -28,9 +28,9 @@ public class TouchProcessor : MonoBehaviour
     int prevServo = 0;
 
     // Temperature variables
-    int heatScale = 12;
-    int freezeScale = 8;
-    int roomTemp = 24;
+    int heatScale = 20;
+    int freezeScale = 25;
+    int roomTemp = 25;
 
     void Start()
     {
