@@ -19,13 +19,17 @@ void PeltierController::temperatureControl()
     readThermistor();
     calculateError();
     // int output = error * Kp; no pid control for now
-    if (error > 3)
+    if(desiredTemp == 25){
+            disable();
+        }
+    else{
+        if (error > 3)
     { 
         Serial.println("Temperature too low. Heating up.");
         digitalWrite(peltierDriverPin1, HIGH);
         digitalWrite(peltierDriverPin2, LOW);
     }
-    else if (error < 3)
+    else if (error < -3)
     {
         Serial.println("Temperature too high. Cooling down.");
         digitalWrite(peltierDriverPin1, LOW);
@@ -36,10 +40,9 @@ void PeltierController::temperatureControl()
         Serial.println("Within desired temperature range.");
         digitalWrite(peltierDriverPin1, LOW);
         digitalWrite(peltierDriverPin2, LOW);
-        if(desiredTemp == 25){
-            disable();
-        }
     }
+    }
+    
     Serial.println("------");
 }
 
