@@ -8,23 +8,7 @@ public class Tests : MonoBehaviour
 {   
     [SerializeField] GameObject parentObject;
     [SerializeField] GameObject[] tests;
-    [SerializeField] Vector3[] spawnPositions = new Vector3[]
-    {
-        new Vector3(-0.094f, -0.057f, -0.019f),
-        new Vector3(-1.625f, -0.057f, -0.019f),
-        new Vector3(-3.167f, -0.05f, -0.019f),
-        new Vector3(2.982f, -0.053f, 4.466f),  
-        new Vector3(2.982f, -0.053f, 2.888f), 
-        new Vector3(2.982f, -0.053f, 5.862f),
-        new Vector3(14.6739998f,-0.0570001602f,-6.14400005f),
-        new Vector3(13.1890001f,-0.0570001602f,-6.14400005f),
-        new Vector3(11.6269999f,-0.0570001602f,-6.14400005f),
-        new Vector3(-5.92000008f,-0.0570001602f,-3.82599998f),
-        new Vector3(-4.4380002f,-0.0570001602f,-3.82599998f),
-        new Vector3(-2.99499989f,-0.0570001602f,-3.8259999f),
-        new Vector3(-1.47800004f,-0.0570001602f,-3.82599998f),
-        new Vector3(9.27000046f,-0.0570001602f,0.495999992f)
-    };
+    [SerializeField] Vector3[] spawnPositions;
      [SerializeField] Quaternion[] spawnRotations = new Quaternion[]
     {
         Quaternion.Euler(0.0f, 0.0f, 0.0f),
