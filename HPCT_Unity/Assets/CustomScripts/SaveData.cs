@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -10,6 +11,8 @@ using System.Xml.Linq;
 public class SaveData : MonoBehaviour
 {
     public Button quitButton;
+    private bool incomplete = false;
+    public GameObject warningText;
     public bool test1 = true;
     private string xmlFilePath;
     private XDocument xmlDoc;
@@ -34,12 +37,18 @@ public class SaveData : MonoBehaviour
         if (test1)
         {
             SaveData1();
-            SceneManager.LoadScene("MaterialTests");
+            if (!incomplete)
+                {
+                    SceneManager.LoadScene("MaterialTests");
+                }
         }
         else
         {
             SaveData2();
-            QuitGame();
+            if (!incomplete)
+                {
+                    QuitGame();
+                }
         }
     }
 
@@ -71,10 +80,25 @@ public class SaveData : MonoBehaviour
                 {
                     GameObject question = content.transform.GetChild(i).GetChild(1).gameObject;
                     int testValue = GetDropdownValue(question);
-                    testValues.Add(testValue);
+                    if (testValue == -1)
+                    {
+                        incomplete = true;
+                        break;
+                    }
+                    else
+                    {
+                        testValues.Add(testValue);
+                    }
                 }
 
-                SaveTestResultsToXml(testName, testValues);
+                if (!incomplete)
+                {
+                    SaveTestResultsToXml(testName, testValues);
+                }
+                else
+                {
+                    StartCoroutine(ShowWarningText());
+                }
             }
             else
             {
@@ -107,21 +131,44 @@ public class SaveData : MonoBehaviour
                 List<List<int>> testValues = new List<List<int>>();
                 for (int i = 0; i < panels.transform.childCount; i++)
                 {
-                    GameObject panel = panels.transform.GetChild(i).gameObject;
-                    GameObject content = panel.gameObject.transform.GetChild(1).GetChild(3).
-                    GetChild(0).GetChild(0).gameObject;
-
-                    List<int> panelValues = new List<int>();
-                    for (int j = 0; j < content.transform.childCount; j++)
+                    if (!incomplete)
                     {
-                        GameObject question = content.transform.GetChild(j).GetChild(1).gameObject;
-                        int testValue = GetDropdownValue(question);
-                        panelValues.Add(testValue);
+                        GameObject panel = panels.transform.GetChild(i).gameObject;
+                        GameObject content = panel.gameObject.transform.GetChild(1).GetChild(3).
+                        GetChild(0).GetChild(0).gameObject;
+
+                        List<int> panelValues = new List<int>();
+                        for (int j = 0; j < content.transform.childCount; j++)
+                        {
+                            GameObject question = content.transform.GetChild(j).GetChild(1).gameObject;
+                            int testValue = GetDropdownValue(question);
+                            if (testValue == -1)
+                            {
+                                incomplete = true;
+                                break;
+                            }
+                            else
+                            {
+                                panelValues.Add(testValue);
+                            }
+                        }
+                        if (!incomplete)
+                        {
+                            testValues.Add(panelValues);
+                        }
                     }
-                    testValues.Add(panelValues);
+
+
                 }
 
-                SaveTestResultsToXml(testName, testValues);
+                if (!incomplete)
+                {
+                    SaveTestResultsToXml(testName, testValues);
+                }
+                else
+                {
+                    StartCoroutine(ShowWarningText());
+                }
             }
             else
             {
@@ -141,11 +188,11 @@ public class SaveData : MonoBehaviour
     {
         Debug.Log("Exiting Game Automatically");
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
                         UnityEditor.EditorApplication.isPlaying = false;
-        #else
-                Application.Quit();
-        #endif
+#else
+        Application.Quit();
+#endif
     }
 
     void SaveTestResultsToXml(string testName, List<int> testValues)
@@ -155,7 +202,7 @@ public class SaveData : MonoBehaviour
         {
             xmlFilePath = "Test1.xml";
 
-            if (System.IO.File.Exists("TestResults/"+userID+"_"+xmlFilePath))
+            if (System.IO.File.Exists("TestResults/" + userID + "_" + xmlFilePath))
             {
                 userID++;
             }
@@ -227,5 +274,13 @@ public class SaveData : MonoBehaviour
             }
         }
         return values;
+    }
+
+    private IEnumerator ShowWarningText()
+    {
+        warningText.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        warningText.SetActive(false);
+        incomplete = false;
     }
 }
