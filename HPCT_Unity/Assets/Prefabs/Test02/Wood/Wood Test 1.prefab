@@ -128,7 +128,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2837745458464479476, guid: 2129c9b7b750cd240b3455708adb7f9b, type: 3}
       propertyPath: Roughness
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2837745458464479476, guid: 2129c9b7b750cd240b3455708adb7f9b, type: 3}
       propertyPath: BumpDensity

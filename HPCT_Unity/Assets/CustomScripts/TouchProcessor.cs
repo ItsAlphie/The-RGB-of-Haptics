@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -29,8 +28,8 @@ public class TouchProcessor : MonoBehaviour
 
     // Temperature variables
     int heatScale = 20;
-    int freezeScale = 25;
-    int roomTemp = 25;
+    int freezeScale = 10;
+    int roomTemp = 35;
 
     void Start()
     {
@@ -45,7 +44,7 @@ public class TouchProcessor : MonoBehaviour
         previousPosition = transform.position;
 
         velocitySamples.Enqueue(velocity.magnitude);
-        if (velocitySamples.Count > sampleSize)
+        while (velocitySamples.Count > sampleSize)
         {
             velocitySamples.Dequeue();
         }
@@ -62,8 +61,8 @@ public class TouchProcessor : MonoBehaviour
         HapticInfo hapticInfo = other.gameObject.GetComponent<HapticInfo>();
         if (hapticInfo != null)
         {
-            int roughness = (int)(hapticInfo.Roughness * 255);
-            int bumpSize = (int)(hapticInfo.BumpSize * 255);
+            int roughness = (int)(hapticInfo.Roughness * 205 + 50);
+            int bumpSize = (int)(hapticInfo.BumpSize * 200);
             int temperature = roomTemp;
 
             if (hapticInfo.Temperature > 0)
@@ -79,7 +78,7 @@ public class TouchProcessor : MonoBehaviour
                     "Temperature " + temperature + ", " +
                     "Roughness " + roughness + ", " +
                     "BumpsSize " + bumpSize);
-
+            
             if (velocitySamples.Count > sampleSize)
             {
                 velocitySamples.Dequeue();
@@ -96,6 +95,8 @@ public class TouchProcessor : MonoBehaviour
                 repeat -= 1;
             }
             entered = true;
+            velocitySamples.Clear();
+            velocitySamples.Enqueue(-0.5f);
         }
     }
 
@@ -110,7 +111,7 @@ public class TouchProcessor : MonoBehaviour
             while (counter < sampleSize)
             {
                 counter += 1;
-                break;
+                return;
             }
             counter = 0;
 
@@ -118,26 +119,45 @@ public class TouchProcessor : MonoBehaviour
             // based on the finger's velocity range and the haptic information (1/3, 2/3 or 3/3)
             // This scales roughness from 25-50, 50-100, 75-150
             float averageVelocity = CalculateAverageVelocity();
+
+            // Bumpiness
             int bumpsFrequency = 0;
-            int roughnessFrequency = 0;
+
+            int value = UnityEngine.Random.Range(0, 3);
+
             if (averageVelocity >= (maxVelocity * 1))
             {
-                bumpsFrequency = (int)(hapticInfo.BumpDensity * maxBumps * 1);
-                roughnessFrequency = (int)(hapticInfo.RoughnessDensity * maxRoughness * 1);
+                bumpsFrequency = (int)(hapticInfo.BumpDensity * maxBumps * 1) + value;
             }
             else if (averageVelocity > (maxVelocity * 0.65))
             {
-                bumpsFrequency = (int)(hapticInfo.BumpDensity * maxBumps * 0.75);
-                roughnessFrequency = (int)(hapticInfo.RoughnessDensity * maxRoughness * 0.75);
+                bumpsFrequency = (int)(hapticInfo.BumpDensity * maxBumps * 0.75) + value;
             }
-            else if (averageVelocity > (maxVelocity * 0.23))
+            else if (averageVelocity > (maxVelocity * 0.20))
             {
-                bumpsFrequency = (int)(hapticInfo.BumpDensity * maxBumps * 0.5);
-                roughnessFrequency = (int)(hapticInfo.RoughnessDensity * maxRoughness * 0.5);
+                bumpsFrequency = (int)(hapticInfo.BumpDensity * maxBumps * 0.4) + value;
             }
             else
             {
                 bumpsFrequency = 0;
+            }
+
+            // Roughness
+            int roughnessFrequency = 0;
+            if (averageVelocity >= (maxVelocity * 0.55))
+            {
+                roughnessFrequency = (int)(hapticInfo.RoughnessDensity * maxRoughness * 1);
+            }
+            else if (averageVelocity > (maxVelocity * 0.37))
+            {
+                roughnessFrequency = (int)(hapticInfo.RoughnessDensity * maxRoughness * 0.75);
+            }
+            else if (averageVelocity > (maxVelocity * 0.18))
+            {
+                roughnessFrequency = (int)(hapticInfo.RoughnessDensity * maxRoughness * 0.66);
+            }
+            else
+            {
                 roughnessFrequency = 0;
             }
 
@@ -222,6 +242,7 @@ public class TouchProcessor : MonoBehaviour
                 repeat -= 1;
             }
             velocitySamples.Clear();
+            counter = 0;
             prevServo = 0;
             prevBumps = 0;
             prevRoughness = 0;
