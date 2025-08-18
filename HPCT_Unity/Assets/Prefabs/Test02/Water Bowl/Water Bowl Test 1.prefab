@@ -191,7 +191,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2518923671317134781, guid: e29099db07043fa448857cb46fe82793, type: 3}
       propertyPath: m_Name
-      value: Smooth (LF @ hf ma) + Warm
+      value: Smooth (LF @ hf ma)
       objectReference: {fileID: 0}
     - target: {fileID: 3744197708491470881, guid: e29099db07043fa448857cb46fe82793, type: 3}
       propertyPath: Roughness
@@ -199,7 +199,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3744197708491470881, guid: e29099db07043fa448857cb46fe82793, type: 3}
       propertyPath: Temperature
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
