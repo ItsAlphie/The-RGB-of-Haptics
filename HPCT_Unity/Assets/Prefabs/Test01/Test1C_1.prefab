@@ -1367,9 +1367,8 @@ GameObject:
   - component: {fileID: 2906606112746053686}
   - component: {fileID: 2304028030428393363}
   - component: {fileID: 4043522183956978521}
-  - component: {fileID: 7295975011347911795}
   - component: {fileID: 741718704625077099}
-  - component: {fileID: 1072579217063669377}
+  - component: {fileID: 3059570333374534447}
   m_Layer: 0
   m_Name: Impact MidFreq MaxAmp Plate
   m_TagString: Untagged
@@ -1442,28 +1441,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7295975011347911795
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2530326383637658252}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -7026044914867049646, guid: 4a127b51b3277d042984beff123210ac, type: 3}
 --- !u!114 &741718704625077099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1490,33 +1467,27 @@ MonoBehaviour:
   sendData: 0
   activate: 0
   deactivate: 0
---- !u!54 &1072579217063669377
-Rigidbody:
+--- !u!65 &3059570333374534447
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2530326383637658252}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5000002, y: 0.028338, z: 0.30000022}
+  m_Center: {x: -0.000000080020726, y: 0.014168028, z: -0.14999981}
 --- !u!1 &2548162587165341587
 GameObject:
   m_ObjectHideFlags: 0
