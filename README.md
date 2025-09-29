@@ -33,5 +33,8 @@ Wireless communication between the glove's microcontroller and Unity to synchron
 * User Test 1: Psychophysical identification of base haptic primitives without visual stimuli.
 * User Test 2: Material comparison test with real-world analogues to evaluate texture approximation.
 
+## Demo
+[🎥 Demo video: Overview & Haptic Demonstration](https://github.com/ItsAlphie/The-RGB-of-Haptics/blob/main/Demo's/Demo_OverviewAndDemonstration.mp4)
+
 ## Additional Information
 Details and results can be found in our initial MasterThesis.pdf. The project has been further developed and synthesized to be submitted to CHI2026, this result can be found in SubmittedPaper.pdf
