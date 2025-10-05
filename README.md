@@ -35,6 +35,3 @@ Wireless communication between the glove's microcontroller and Unity to synchron
 
 ## Demo
 [🎥 Demo video: Overview & Haptic Demonstration](https://github.com/ItsAlphie/The-RGB-of-Haptics/blob/main/Demo's/Demo_OverviewAndDemonstration.mp4)
-
-## Additional Information
-Details and results can be found in our initial MasterThesis.pdf. The project has been further developed and synthesized to be submitted to CHI2026, this result can be found in SubmittedPaper.pdf
